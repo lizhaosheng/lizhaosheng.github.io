@@ -1,0 +1,802 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Spring Cloud Netflix
+ —- 原文链接对官网Spring Cloud Netflix介绍文档进行翻译，方便以后自己查阅，也希望能够帮助到更多的人能够更快更便捷的了解Spring Cloud Netflix。由于本人英语比较渣，翻译的也比较仓促，有不少地方翻译的狗屁不通或者莫名其妙或者理解南辕北撤，先感谢多多纠正。
+引言This project provides Netflix">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud微服务学习[1]:Spring Cloud Netflix文档翻译">
+<meta property="og:url" content="http://lizhaosheng.github.io/2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/index.html">
+<meta property="og:site_name" content="远眺蜃楼">
+<meta property="og:description" content="Spring Cloud Netflix
+ —- 原文链接对官网Spring Cloud Netflix介绍文档进行翻译，方便以后自己查阅，也希望能够帮助到更多的人能够更快更便捷的了解Spring Cloud Netflix。由于本人英语比较渣，翻译的也比较仓促，有不少地方翻译的狗屁不通或者莫名其妙或者理解南辕北撤，先感谢多多纠正。
+引言This project provides Netflix">
+<meta property="og:image" content="http://lizhaosheng.github.io/images/Hystrix.png">
+<meta property="og:image" content="http://lizhaosheng.github.io/images/HystrixFallback.png">
+<meta property="og:image" content="http://lizhaosheng.github.io/images/HystrixGraph.png">
+<meta property="og:updated_time" content="2016-08-29T11:57:46.448Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring Cloud微服务学习[1]:Spring Cloud Netflix文档翻译">
+<meta name="twitter:description" content="Spring Cloud Netflix
+ —- 原文链接对官网Spring Cloud Netflix介绍文档进行翻译，方便以后自己查阅，也希望能够帮助到更多的人能够更快更便捷的了解Spring Cloud Netflix。由于本人英语比较渣，翻译的也比较仓促，有不少地方翻译的狗屁不通或者莫名其妙或者理解南辕北撤，先感谢多多纠正。
+引言This project provides Netflix">
+<meta name="twitter:image" content="http://lizhaosheng.github.io/images/Hystrix.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"right","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '主人'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://lizhaosheng.github.io/2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/"/>
+
+  <title> Spring Cloud微服务学习[1]:Spring Cloud Netflix文档翻译 | 远眺蜃楼 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?d5ab2ecff9fdb1698ea9052269f43271";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">远眺蜃楼</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">拔剑四顾心茫然</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/commonweal" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Spring Cloud微服务学习[1]:Spring Cloud Netflix文档翻译
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-29T17:34:22+08:00" content="2016-08-29 17:34:22">
+              2016-08-29 17:34:22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><center><font size="10"><b>Spring Cloud Netflix</b></font></center></p>
+<p><center> —- <a href="http://cloud.spring.io/spring-cloud-netflix/spring-cloud-netflix.html" target="_blank" rel="external">原文链接</a></center><br>对官网Spring Cloud Netflix介绍文档进行翻译，方便以后自己查阅，也希望能够帮助到更多的人能够更快更便捷的了解Spring Cloud Netflix。由于本人英语比较渣，翻译的也比较仓促，有不少地方翻译的狗屁不通或者莫名其妙或者理解南辕北撤，先感谢多多纠正。<br><br></p>
+<p></p><h1>引言</h1><br>This project provides Netflix OSS integrations for Spring Boot apps through autoconfiguration and binding to the Spring Environment and other Spring programming model idioms. With a few simple annotations you can quickly enable and configure the common patterns inside your application and build large distributed systems with battle-tested Netflix components. The patterns provided include Service Discovery (Eureka), Circuit Breaker (Hystrix), Intelligent Routing (Zuul) and Client Side Load Balancing (Ribbon).<br><a id="more"></a><br>Spring cloud 项目为Spring Boot应用提供Netflix OSS集成，并能够自动配置spring环境以及提供其他spring编程特性。只需进行一些简单的注解，你就可以利用久经考验的Netflix组件快速在应用中启用通用的模式，构建大型分布式系统。这些模式包括：服务发现（Eureka），断路器（Hystrix），智能路由（Zuul）和客户端侧的负载均衡（Ribbon）<p></p>
+<p><font size="5"><b>Service Discovery: Eureka Clients</b></font><br>Service Discovery is one of the key tenets of a microservice based architecture. Trying to hand configure each client or some form of convention can be very difficult to do and can be very brittle. Eureka is the Netflix Service Discovery Server and Client. The server can be configured and deployed to be highly available, with each server replicating state about the registered services to the others.</p>
+<p></p><h1>服务发现：Eureka Clients</h1><br>服务发现是微服务架构的关键宗旨之一。手动配置每个客户端或者某种形式的约定是非常困难的，也导致系统非常的脆弱。Eureka是Netflix的服务发现组件，通过配置部署Eureka集群，服务端之间的相互备份提供高可用性。<p></p>
+<p><font size="4"><b>Registering with Eureka</b></font><br>When a client registers with Eureka, it provides meta-data about itself such as host and port, health indicator URL, home page etc. Eureka receives heartbeat messages from each instance belonging to a service. If the heartbeat fails over a configurable timetable, the instance is normally removed from the registry.</p>
+<p></p><h2>通过Eureka注册服务</h2><br>Eureka客户端（服务提供者和服务消费者都是客户端，服务提供者向Eureka注册服务，而消费者向Eureka获取服务）向Eueka注册服务时，提供关于自身的一些元数据信息，比如主机名和端口、健康检查url、主页等。Eureka接收来自服务实例的心跳消息，若在超过指定的时间间隔未收到心跳消息，Eureka将该服务从注册表中移除。<br>Example eureka client:<br>Eureka客户端的小栗子<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@ComponentScan</div><div class="line">@EnableAutoConfiguration</div><div class="line">@EnableEurekaClient</div><div class="line">@RestController</div><div class="line">public class Application &#123;</div><div class="line"></div><div class="line">    @RequestMapping(<span class="string">"/"</span>)</div><div class="line">    public String <span class="function"><span class="title">home</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> <span class="string">"Hello world"</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        new SpringApplicationBuilder(Application.class).web(<span class="literal">true</span>).run(args);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>(i.e. utterly normal Spring Boot app). （真的就是一个绝对普通的Spring Boot应用，ps：@Configuration @ComponentScan @EnableAutoConfiguration 也可以用@SpringBootApplication 一个注解来代替）<br>In this example we use @EnableEurekaClient explicitly, but with only Eureka available you could also use @EnableDiscoveryClient. Configuration is required to locate the Eureka server.<br>在这个栗子中，我们明确的使用 @EnableEurekaClient，但也可以使用@EnableDiscoveryClient（@EnableEurekaClient注解包含@EnableDiscoveryClient，但其实基本一样，建议使用@EnableDiscoveryClient）。为了能够定位到Eueka服务端，需要进一些配置，如下：<br>Example:（栗子栗子栗子）<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http://localhost:8761/eureka/</div></pre></td></tr></table></figure></p>
+<p>where “defaultZone” is a magic string fallback value that provides the service URL for any client that doesn’t express a preference (i.e. it’s a useful default).<br>“defaultZone”配置指定Eureka服务端地址（使用逗号分隔多个，集群配置方式）<br>The default application name (service ID), virtual host and non-secure port, taken from the Environment, are${spring.application.name}, ${spring.application.name} and ${server.port} respectively.<br>可以通过使用${spring.application.name}, ${spring.application.name} and ${server.port} ，设置默认的应用名（服务id，基本上应用=服务）、虚拟机和端口<br>@EnableEurekaClient makes the app into both a Eureka “instance” (i.e. it registers itself) and a “client” (i.e. it can query the registry to locate other services). The instance behaviour is driven by eureka.instance.<em> configuration keys, but the defaults will be fine if you ensure that your application has a spring.application.name (this is the default for the Eureka service ID, or VIP).<br>See EurekaInstanceConfigBean and EurekaClientConfigBean for more details of the configurable options.<br>使用@EnableEurekaClient让成为Eureka客户端实例（注册自身作为服务，并能够通过Eureka服务端查询定位其他服务）。可以在配置文件中通过配置eureka.instance.</em>属性来指定实例名，但不设置也是可以使用默认的（默认使用spring.application.name中的值）。更多关于配置的信息请参考 EurekaInstanceConfigBean and EurekaClientConfigBean</p>
+<p><font size="4"><b>Authenticating with the Eureka Server</b></font><br>HTTP basic authentication will be automatically added to your eureka client if one of theeureka.client.serviceUrl.defaultZone URLs has credentials embedded in it (curl style, like<a href="http://user:password@localhost:8761/eureka" target="_blank" rel="external">http://user:password@localhost:8761/eureka</a>). For more complex needs you can create a @Bean of type DiscoveryClientOptionalArgs and inject ClientFilter instances into it, all of which will be applied to the calls from the client to the server.<br>NOTE    Because of a limitation in Eureka it isn’t possible to support per-server basic auth credentials, so only the first set that are found will be used.</p>
+<p></p><h2>Eureka服务端校验</h2><br>按照如下方式设置HTTP的基本认证会自动添加到Eureka客户端：eureka.client.serviceUrl.defaultZone属性中的URLs（集群，多个）设置认证信息格式为：<a href="http://user:password@localhost:8761/eureka。若需要更加复杂的认证，你也可以创建一个带ClientFilter" target="_blank" rel="external">http://user:password@localhost:8761/eureka。若需要更加复杂的认证，你也可以创建一个带ClientFilter</a> 注解的DiscoveryClientOptionalArgs 类实例。当Eureka客户端向服务端请求时，该实例将会起作用。<br>注意：由于Eureka的限制，不支持不同服务端不同认证方式，仅使用最先发现的认证方式<p></p>
+<p><font size="4"><b>Status Page and Health Indicator</b></font><br>The status page and health indicators for a Eureka instance default to “/info” and “/health” respectively, which are the default locations of useful endpoints in a Spring Boot Actuator application. You need to change these, even for an Actuator application if you use a non-default context path or servlet path (e.g. server.servletPath=/foo) or management endpoint path (e.g. management.contextPath=/admin). Example:<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    statusPageUrlPath: <span class="variable">$&#123;management.context-path&#125;</span>/info</div><div class="line">    healthCheckUrlPath: <span class="variable">$&#123;management.context-path&#125;</span>/health</div></pre></td></tr></table></figure></p>
+<p>These links show up in the metadata that is consumed by clients, and used in some scenarios to decide whether to send requests to your application, so it’s helpful if they are accurate.</p>
+<p></p><h2>状态页面和健康检查</h2><br>浏览器中输入<a href="http://服务客户端域名/info" target="_blank" rel="external">http://服务客户端域名/info</a> 和http:// 服务客户端域名/health可以查看当前服务状态和健康信息页面。这是spring boot默认提供的。如果你需要改变访问路径，则需要修改以下配置：<br>server.servletPath=/foo 或者management.contextPath=/admin<br>然后在eureka.instance配置如下：<br>application.yml<br>eureka:<br>  instance:<br>    statusPageUrlPath: ${management.context-path}/info  healthCheckUrlPath: ${management.context-path}/health<p></p>
+<p><font size="4"><b>Registering a Secure Application</b></font><br>If your app wants to be contacted over HTTPS you can set two flags in the EurekaInstanceConfig, vizeureka.instance.[nonSecurePortEnabled,securePortEnabled]=[false,true] respectively. This will make Eureka publish instance information showing an explicit preference for secure communication. The Spring CloudDiscoveryClient will always return an https://…; URI for a service configured this way, and the Eureka (native) instance information will have a secure health check URL.</p>
+<p></p><h2>注册安全应用（HTTPS）</h2><br>如果你的应用是基于https协议通信，你需要设置两个标志：<br>eureka.instance.[nonSecurePortEnabled,securePortEnabled]=[false,true]（我理解就是设置其中一个就可以了，比如设置eureka.instance. securePortEnabled=true）。Spring Cloud发现服务总是会返回https的地址。<br>Because of the way Eureka works internally, it will still publish a non-secure URL for status and home page unless you also override those explicitly. You can use placeholders to configure the eureka instance urls, e.g.<br>但是由于eureka的工作原理，状态和主页仍然是以非安全http形式发布，除非你显式的去指定为https，如下：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    statusPageUrl: https://<span class="variable">$&#123;eureka.hostname&#125;</span>/info</div><div class="line">    healthCheckUrl: https://<span class="variable">$&#123;eureka.hostname&#125;</span>/health</div><div class="line">    homePageUrl: https://<span class="variable">$&#123;eureka.hostname&#125;</span>/</div></pre></td></tr></table></figure><p></p>
+<p>(Note that ${eureka.hostname} is a native placeholder only available in later versions of Eureka. You could achieve the same thing with Spring placeholders as well, e.g. using ${eureka.instance.hostName}.)<br>（注意，${eureka.hostname}是后面版本的eureka才有，也可以使用spring提供的${eureka.instance.hostName}（建议））<br>NOTE    If your app is running behind a proxy, and the SSL termination is in the proxy (e.g. if you run in Cloud Foundry or other platforms as a service) then you will need to ensure that the proxy “forwarded” headers are intercepted and handled by the application. An embedded Tomcat container in a Spring Boot app does this automatically if it has explicit configuration for the ‘X-Forwarded-*<code>headers. A sign that you got this wrong will be that the links rendered by your app to itself will be wrong (the wrong host, port or protocol).
+注意：如果你的应用是运行在SSL终端代理（例如作为服务运行在Cloud Foundry或其他平摊）后面，那你需要确认代理的&quot;forwarded&quot;头设置被应用的替换处理。如果有显式的&#39;X-Forwarded-\*</code>头设置，Spring Cloud的内嵌tomcat会自动完成这件事情。如果应用到自身的链接是错误的（错误的域名或者端口或者协议），则表明ssl设置有误。</p>
+<p><font size="4"><b>Eureka’s Health Checks</b></font><br>By default, Eureka uses the client heartbeat to determine if a client is up. Unless specified otherwise the Discovery Client will not propagate the current health check status of the application per the Spring Boot Actuator. Which means that after successful registration Eureka will always announce that the application is in ‘UP’ state. This behaviour can be altered by enabling Eureka health checks, which results in propagating application status to Eureka. As a consequence every other application won’t be sending traffic to application in state other then ‘UP’.</p>
+<p></p><h2>Eureka健康检查</h2><br>默认的情况下，eureka利用客户端心跳机制来确认客户端是否在线。除非特别指明，否则eureka客户端不会传递当前健康检查状态。也就是说，成功注册服务后，eureka总是认为客户端是在线的状态。可以通过启用eureka健康检查来改变默认行为，这样eureka客户端就会传递自身的健康信息到eureka服务端。结果其他的服务就不会请求到不是up状态的eureka客户端。（也就是流量控制，某些客户端流量过大处理不过来，将自身状态设置为繁忙之类的，后续请求将不会过来）<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  client:</div><div class="line">    healthcheck:</div><div class="line">      enabled: <span class="literal">true</span></div></pre></td></tr></table></figure><p></p>
+<p>If you require more control over the health checks, you may consider implementing your owncom.netflix.appinfo.HealthCheckHandler.<br>如果需要更进一步对健康检查的控制，可以实现自己的com.netflix.appinfo.HealthCheckHandler类</p>
+<p><font size="4"><b>Eureka Metadata for Instances and Clients</b></font><br>It’s worth spending a bit of time understanding how the Eureka metadata works, so you can use it in a way that makes sense in your platform. There is standard metadata for things like hostname, IP address, port numbers, status page and health check. These are published in the service registry and used by clients to contact the services in a straightforward way. Additional metadata can be added to the instance registration in the eureka.instance.metadataMap, and this will be accessible in the remote clients, but in general will not change the behaviour of the client, unless it is made aware of the meaning of the metadata. There are a couple of special cases described below where Spring Cloud already assigns meaning to the metadata map.</p>
+<p></p><h2>Eureka实例和客户端的元数据</h2><br>花点时间去了解eureka元数据的工作原理是值得的，这样就可以在你的平台更好的使用eureka。Eureka为像主机名、ip、端口、状态页、健康检查等指定标准的元数据。这些都保存在服务注册表中，方便eureka客户端更直接获取服务。通过设置eureka.instance.metadataMap可以添加额外的元数据信息，这些信息也都可以在任意其他eureka客户端获取使用，但不会改变其他客户端的行为，除非其他客户端设置为可感知元数据。下面有一些例子来说明元数据映射（metadata map）在spring cloud中的意义。<br><b>Using Eureka on Cloudfoundry</b><br>在Cloudfoundry中使用eureka——不翻译了<br>Cloudfoundry has a global router so that all instances of the same app have the same hostname (it’s the same in other PaaS solutions with a similar architecture). This isn’t necessarily a barrier to using Eureka, but if you use the router (recommended, or even mandatory depending on the way your platform was set up), you need to explicitly set the hostname and port numbers (secure or non-secure) so that they use the router. You might also want to use instance metadata so you can distinguish between the instances on the client (e.g. in a custom load balancer). By default, theeureka.instance.instanceId is vcap.application.instance_id. For example:<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    hostname: <span class="variable">$&#123;vcap.application.uris[0]&#125;</span></div><div class="line">    nonSecurePort: 80</div></pre></td></tr></table></figure><p></p>
+<p>Depending on the way the security rules are set up in your Cloudfoundry instance, you might be able to register and use the IP address of the host VM for direct service-to-service calls. This feature is not (yet) available on Pivotal Web Services (PWS).<br><b>Using Eureka on AWS</b><br>在AWS中使用eureka——不翻译了<br>If the application is planned to be deployed to an AWS cloud, then the Eureka instance will have to be configured to be Amazon aware and this can be done by customizing the EurekaInstanceConfigBean the following way:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Bean</div><div class="line">@Profile(<span class="string">"!default"</span>)</div><div class="line">public EurekaInstanceConfigBean <span class="function"><span class="title">eurekaInstanceConfig</span></span>() &#123;</div><div class="line">  EurekaInstanceConfigBean b = new EurekaInstanceConfigBean();</div><div class="line">  AmazonInfo info = AmazonInfo.Builder.newBuilder().autoBuild(<span class="string">"eureka"</span>);</div><div class="line">  b.setDataCenterInfo(info);</div><div class="line">  <span class="built_in">return</span> b;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><b>Changing the Eureka Instance ID</b><br>A vanilla Netflix Eureka instance is registered with an ID that is equal to its host name (i.e. only one service per host). Spring Cloud Eureka provides a sensible default that looks like this:${spring.cloud.client.hostname}:${spring.application.name}:${spring.application.instance_id:${server.port}}}. For example myhost:myappname:8080.<br><b>改变eureka实例id</b><br>通常情况下eureka实例id格式是：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="variable">$&#123;spring.cloud.client.hostname&#125;</span>:<span class="variable">$&#123;spring.application.name&#125;</span>:<span class="variable">$&#123;spring.application.instance_id:$&#123;server.port&#125;</span>&#125;.</div></pre></td></tr></table></figure></p>
+<p>比如myhost:myappname:8080.<br>注意，原文后面多了个} 。还有最后的${spring.application.instance_id:${server.port}}表示若spring.application.instance_id变量不存在，则取server.port，有点类似?:运算符。<br>Using Spring Cloud you can override this by providing a unique identifier in eureka.instance.instanceId. For example:<br>可以在配置文件中指定特定的instanceId，如下<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    instanceId: <span class="variable">$&#123;spring.application.name&#125;</span>:<span class="variable">$&#123;vcap.application.instance_id:$&#123;spring.application.instance_id:$&#123;random.value&#125;</span>&#125;&#125;</div></pre></td></tr></table></figure></p>
+<p>With this metadata, and multiple service instances deployed on localhost, the random value will kick in there to make the instance unique. In Cloudfoundry the vcap.application.instance_id will be populated automatically in a Spring Boot application, so the random value will not be needed.<br>这样就可以在本地起多个相同的服务。</p>
+<p><font size="4"><b>Using the EurekaClient</b></font><br>Once you have an app that is @EnableDiscoveryClient (or @EnableEurekaClient) you can use it to discover service instances from the Eureka Server. One way to do that is to use the native com.netflix.discovery.EurekaClient (as opposed to the Spring Cloud DiscoveryClient), e.g.</p>
+<p></p><h2>使用eureka客户端</h2><br>通过 @EnableDiscoveryClient或@EnableEurekaClient注解你就可以声明一个eureka客户端实例，去获取其他服务。一种获取服务的方式是使用 com.netflix.discovery.EurekaClient对象（注解后spring cloud会曝露该对象，直接注入即可使用）。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@Autowired</div><div class="line">private EurekaClient discoveryClient;</div><div class="line"></div><div class="line">public String <span class="function"><span class="title">serviceUrl</span></span>() &#123;</div><div class="line">    InstanceInfo instance = discoveryClient.getNextServerFromEureka(<span class="string">"STORES"</span>, <span class="literal">false</span>);</div><div class="line">    <span class="built_in">return</span> instance.getHomePageUrl();</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>TIP    Don’t use the EurekaClient in @PostConstruct method or in a @Scheduled method (or anywhere where the ApplicationContext might not be started yet). It is initialized in a SmartLifecycle (withphase=0) so the earliest you can rely on it being available is in another SmartLifecycle with higher phase.<br>注意：EurekaClient 的注解不能在有@PostConstruct 或@Scheduled 的方法上（或者其他ApplicationContext 还没初始化的方法上）</p>
+<p><font size="4"><b>Alternatives to the native Netflix EurekaClient</b></font><br>You don’t have to use the raw Netflix EurekaClient and usually it is more convenient to use it behind a wrapper of some sort. Spring Cloud has support for Feign (a REST client builder) and also Spring RestTemplate using the logical Eureka service identifiers (VIPs) instead of physical URLs. To configure Ribbon with a fixed list of physical servers you can simply set <client>.ribbon.listOfServers to a comma-separated list of physical addresses (or hostnames), where <client>is the ID of the client.<br>You can also use the org.springframework.cloud.client.discovery.DiscoveryClient which provides a simple API for discovery clients that is not specific to Netflix, e.g.</client></client></p>
+<p></p><h2>EurekaClient对象原生服务的替代方案</h2><br>你也可以不使用netflix的EurekaClient 原生服务来获取服务等。实际上spring cloud提供了更方便的封装支持，比如Feign（rest风格的服务请求），或者Spring RestTemplate ，可以通过服务id（也可以是url）来调用服务。为ribbon（负载均衡）配置固定的服务器列表，只需要简单的在配置文件中设置 <client>.ribbon.listOfServers，指定服务器的服务地址（url或者域名）。其中<client>是当前eureka客户端的id（通常是 spring.application.name的值）<br>也可以注入DiscoveryClient对象，这个是spring cloud提供的不仅为netflix实现的通用服务发现客户端api，栗子如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@Autowired</div><div class="line">private DiscoveryClient discoveryClient;</div><div class="line"></div><div class="line">public String <span class="function"><span class="title">serviceUrl</span></span>() &#123;</div><div class="line">    List&lt;ServiceInstance&gt; list = discoveryClient.getInstances(<span class="string">"STORES"</span>);</div><div class="line">    <span class="keyword">if</span> (list != null &amp;&amp; list.size() &gt; 0 ) &#123;</div><div class="line">        <span class="built_in">return</span> list.get(0).getUri();</div><div class="line">    &#125;</div><div class="line">    <span class="built_in">return</span> null;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p><font size="4"><b>Why is it so Slow to Register a Service?</b></font><br>Being an instance also involves a periodic heartbeat to the registry (via the client’s serviceUrl) with default duration 30 seconds. A service is not available for discovery by clients until the instance, the server and the client all have the same metadata in their local cache (so it could take 3 heartbeats). You can change the period usingeureka.instance.leaseRenewalIntervalInSeconds and this will speed up the process of getting clients connected to other services. In production it’s probably better to stick with the default because there are some computations internally in the server that make assumptions about the lease renewal period.</p>
+<p></p><h2>为什么注册服务如此慢</h2><br>注册为服务实例，同时也涉及到周期性的心跳机制（通过serviceUrl请求），默认持续30秒。在实例、服务端、客户端的本地缓存元数据信息一致之前，服务发现是不可用的（所以需要3次心跳确认，可能类似3次握手，保证客户端和服务端的元数据一致）。可以通过eureka.instance.leaseRenewalIntervalInSeconds改变心跳间隔，这将加快客户端连接到其他服务的过程。在生产环境中，可能默认的设置更好，因为服务端内部需要假定的一定的处理时间<p></p>
+<p><font size="5"><b>Service Discovery: Eureka Server</b></font><br>Example eureka server (e.g. using spring-cloud-starter-eureka-server to set up the classpath):</p>
+<p></p><h1>服务发现：eureka服务端</h1><br>eureka服务端栗子，设置spring-cloud-starter-eureka-server依赖：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableEurekaServer</div><div class="line">public class Application &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        new SpringApplicationBuilder(Application.class).web(<span class="literal">true</span>).run(args);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>The server has a home page with a UI, and HTTP API endpoints per the normal Eureka functionality under /eureka/<em>.<br>Eureka background reading: see flux capacitor and google group discussion.<br>访问eureka服务的/eureka/</em> 可以访问主页和api页面。<br>TIP    Due to Gradle’s dependency resolution rules and the lack of a parent bom feature, simply depending on spring-cloud-starter-eureka-server can cause failures on application startup. To remedy this the Spring Boot Gradle plugin must be added and the Spring cloud starter parent bom must be imported like so:<br>由于gradle的依赖规则，缺少父pom依赖特性，仅依赖spring-cloud-starter-eureka-server应用启动时可能会引起一些问题。要解决这个问题需要添加Spring Boot Gradle plugin插件，并需要引入Spring cloud starter parent pom：<br>build.gradle<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">buildscript &#123;</div><div class="line">  dependencies &#123;</div><div class="line">    classpath(<span class="string">"org.springframework.boot:spring-boot-gradle-plugin:1.3.5.RELEASE"</span>)</div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>apply plugin: “spring-boot”<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">dependencyManagement &#123;</div><div class="line">  imports &#123;</div><div class="line">    mavenBom <span class="string">"org.springframework.cloud:spring-cloud-dependencies:Brixton.RELEASE"</span></div><div class="line">  &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><font size="4"><b>High Availability, Zones and Regions</b></font><br>The Eureka server does not have a backend store, but the service instances in the registry all have to send heartbeats to keep their registrations up to date (so this can be done in memory). Clients also have an in-memory cache of eureka registrations (so they don’t have to go to the registry for every single request to a service).<br>By default every Eureka server is also a Eureka client and requires (at least one) service URL to locate a peer. If you don’t provide it the service will run and work, but it will shower your logs with a lot of noise about not being able to register with the peer.<br>See also below for details of Ribbon support on the client side for Zones and Regions.</p>
+<p></p><h2>高可用特性，区块和区域</h2><br>Eureka服务端没有后端存储，但是注册表中的服务实例都必须发送心跳消息来保证注册信息更新（在内存中进行）。客户端同时也保留有本地的注册表缓存（这就不需要每次请求都到服务端获取服务信息）。<br>默认每个eureka服务端也是eureka客户端，需要（至少）服务端url来定位其他等价服务端（也就是eureka服务端集群中的其他服务端——peer）。如果没有提供其他服务端的url，也能正常使用，只是不断的日志输出无法注册到peer的信息（若只有一个服务端，则设置serviceUrl.defaultZone为自身，如<a href="http://discovery:${server.port}/eureka/）。" target="_blank" rel="external">http://discovery:${server.port}/eureka/）。</a><br>请阅 below for details of Ribbon support客户端中ribbon对区块和区域的支持。<p></p>
+<p><font size="4"><b>Standalone Mode</b></font><br>The combination of the two caches (client and server) and the heartbeats make a standalone Eureka server fairly resilient to failure, as long as there is some sort of monitor or elastic runtime keeping it alive (e.g. Cloud Foundry). In standalone mode, you might prefer to switch off the client side behaviour, so it doesn’t keep trying and failing to reach its peers. Example:</p>
+<p></p><h2>单例模式</h2><br>客户端和服务端注册表缓存的结合，以及心跳机制使得单例服务端能够相当弹性应对错误。同时还有其他的监视器和弹性机制保证单例服务端可用（比如cloud foundry）。在单例模式中，更好的做法是关闭客户端行为（也就是单例模式中服务端仅作为服务端，不要同时也声明为客户端），这样就不会尝试去连接其他（不存在的）服务端。例如：<br>application.yml (Standalone Eureka Server)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">server:</div><div class="line">  port: 8761</div><div class="line"></div><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    hostname: localhost</div><div class="line">  client:</div><div class="line">    registerWithEureka: <span class="literal">false</span></div><div class="line">    fetchRegistry: <span class="literal">false</span></div><div class="line">    serviceUrl</div></pre></td></tr></table></figure><p></p>
+<p>Notice that the serviceUrl is pointing to the same host as the local instance.<br>注意：serviceUrl 指向自身</p>
+<p><font size="4"><b>Peer Awareness</b></font><br>Eureka can be made even more resilient and available by running multiple instances and asking them to register with each other. In fact, this is the default behaviour, so all you need to do to make it work is add a valid serviceUrl to a peer, e.g.</p>
+<p></p><h2>同位端感知</h2><br>Eureka在多实例下更有弹性和可靠，多个服务端实例相互注册。这也是默认的行为，因此需要配置serviceUrl 来达到集群效果，如：<br>application.yml (Two Peer Aware Eureka Servers)<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line">---</div><div class="line">spring:</div><div class="line">  profiles: peer1</div><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    hostname: peer1</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http://peer2/eureka/</div><div class="line"></div><div class="line">---</div><div class="line">spring:</div><div class="line">  profiles: peer2</div><div class="line">eureka:</div><div class="line">  instance:</div><div class="line">    hostname: peer2</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http://peer1/eureka/</div></pre></td></tr></table></figure><p></p>
+<p>In this example we have a YAML file that can be used to run the same server on 2 hosts (peer1 and peer2), by running it in different Spring profiles. You could use this configuration to test the peer awareness on a single host (there’s not much value in doing that in production) by manipulating /etc/hosts to resolve the host names. In fact, theeureka.instance.hostname is not needed if you are running on a machine that knows its own hostname (it is looked up using java.net.InetAddress by default).<br>在这个栗子中，YAML文件配置了两个服务端（peer1和peer2），运行时通过指定profile来启动不同的peer。通过该配置然后修改/etc/hosts设置两个host可在同一个主机中测试同位感知（生产环境通常不会这么做）。实际若主机可以获知自身的主机名，eureka.instance.hostname不需要特别指定（默认spring cloud会自动从java.net.InetAddress获取）<br>You can add multiple peers to a system, and as long as they are all connected to each other by at least one edge, they will synchronize the registrations amongst themselves. If the peers are physically separated (inside a data centre or between multiple data centres) then the system can in principle survive split-brain type failures.<br>可以添加多个同位端，不同端之间相互感知连接，这样同位端之间将同步服务注册表。如果同位端被物理隔离（一个或多个数据中心之间），则系统也可以使用。</p>
+<p><font size="4"><b>Prefer IP Address</b></font><br>In some cases, it is preferable for Eureka to advertise the IP Adresses of services rather than the hostname. Seteureka.instance.preferIpAddress to true and when the application registers with eureka, it will use its IP Address rather than its hostname.</p>
+<p></p><h2>Ip地址更好</h2><br>在一些情况下，更建议使用ip地址而不是域名。设置eureka.instance.preferIpAddress为true，则在应用注册到eureka后，将使用ip代替域名进行服务之间的连接。<p></p>
+<p><font size="5"><b>Circuit Breaker: Hystrix Clients</b></font><br>Netflix has created a library called Hystrix that implements the circuit breaker pattern. In a microservice architecture it is common to have multiple layers of service calls.</p>
+<p></p><h1>断路器：Hystrix客户端</h1><br>Netflix创建了一个Hystrix的库来实现断路器模式。在微服务架构中，多层服务调用是非常常见的。<br><img src="/images/Hystrix.png"><br>Figure 1. Microservice Graph<br>A service failure in the lower level of services can cause cascading failure all the way up to the user. When calls to a particular service reach a certain threshold (20 failures in 5 seconds is the default in Hystrix), the circuit opens and the call is not made. In cases of error and an open circuit a fallback can be provided by the developer.<br>低层次的服务失败总是会传导到用户。当调用某个特定的服务失败此时达到了一个阈值（Hystrix是5秒20次），断路将开启，调用失败。为了处理错误，开发者可提供断路回调处理。<br><img src="/images/HystrixFallback.png"><br>Figure 2. Hystrix fallback prevents cascading failures<br>Having an open circuit stops cascading failures and allows overwhelmed or failing services time to heal. The fallback can be another Hystrix protected call, static data or a sane empty value. Fallbacks may be chained so the first fallback makes some other business call which in turn falls back to static data.<br> 开启断路器防止失败传导，并给充分的时间处理失败的服务。失败回调可以是方法、静态数据或者空值。回调可能是串联的，第一个回调可能进行一些是业务逻辑处理，该处理也可能错误而导致回调，并存储到静态数据中。<br>Example boot app:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">@SpringBootApplication</div><div class="line">@EnableCircuitBreaker</div><div class="line">public class Application &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        new SpringApplicationBuilder(Application.class).web(<span class="literal">true</span>).run(args);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line"></div><div class="line">@Component</div><div class="line">public class StoreIntegration &#123;</div><div class="line"></div><div class="line">    @HystrixCommand(fallbackMethod = <span class="string">"defaultStores"</span>)</div><div class="line">    public Object getStores(Map&lt;String, Object&gt; parameters) &#123;</div><div class="line">        //<span class="keyword">do</span> stuff that might fail</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    public Object defaultStores(Map&lt;String, Object&gt; parameters) &#123;</div><div class="line">        <span class="built_in">return</span> /* something useful */;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>The @HystrixCommand is provided by a Netflix contrib library called “javanica”. Spring Cloud automatically wraps Spring beans with that annotation in a proxy that is connected to the Hystrix circuit breaker. The circuit breaker calculates when to open and close the circuit, and what to do in case of a failure.<br>To configure the @HystrixCommand you can use the commandProperties attribute with a list of @HystrixPropertyannotations. See here for more details. See the Hystrix wiki for details on the properties available.<br> Netflix的@HystrixCommand注解贡献了”javanica”库。Spring cloud自动封装加了该注解的bean成代理，该代理会连接到Hystrix断路器。断路器根据情况确定什么时候打开回路什么时候关闭回路，以及出现失败后如何处理。<br>@HystrixCommand注解中你可以使用commandProperties 属性去设置一些特性，例如<br>@HystrixCommand(commandProperties = {<br>            @HystrixProperty(name = “execution.isolation.thread.timeoutInMilliseconds”, value = “500”)<br>        })</p>
+<p><font size="4"><b>Propagating the Security Context or using Spring Scopes</b></font><br>If you want some thread local context to propagate into a @HystrixCommand the default declaration will not work because it executes the command in a thread pool (in case of timeouts). You can switch Hystrix to use the same thread as the caller using some configuration, or directly in the annotation, by asking it to use a different “Isolation Strategy”. For example:</p>
+<p></p><h2>传导安全上下文或者使用spring范围</h2><br>如果你希望将本地线程的上下文传导到@HystrixCommand中，默认的设置是不行的。因为HystrixCommand方法会在线程池中执行（以防超时）。可以设置Hystrix和调用者使用同一个线程，或者直接将在注解中声明不同的隔离策略，例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@HystrixCommand(fallbackMethod = <span class="string">"stubMyService"</span>,</div><div class="line">    <span class="built_in">command</span>Properties = &#123;</div><div class="line">      @HystrixProperty(name=<span class="string">"execution.isolation.strategy"</span>, value=<span class="string">"SEMAPHORE"</span>)</div><div class="line">    &#125;</div><div class="line">)</div><div class="line">...</div></pre></td></tr></table></figure><p></p>
+<p>The same thing applies if you are using @SessionScope or @RequestScope. You will know when you need to do this because of a runtime exception that says it can’t find the scoped context.<br>使用@SessionScope or @RequestScope也可以完成同样的事情。如果抛出运行时异常提示无法找到上下文，你就知道需要使用这些注解了。<br>You also have the option to set the hystrix.shareSecurityContext property to true. Doing so will auto configure an Hystrix concurrency strategy plugin hook who will transfer the SecurityContext from your main thread to the one used by the Hystrix command. Hystrix does not allow multiple hystrix concurrency strategy to be registered so an extension mechanism is available by declaring your own HystrixConcurrencyStrategy as a Spring bean. Spring Cloud will lookup for your implementation within the Spring context and wrap it inside its own plugin.<br>你也可以选择设置hystrix.shareSecurityContext为true，这样会自动设置Hystrix并发策略插件钩子（什么玩意），将SecurityContext 从主线程传递到Hystrix command线程。Hystrix不允许注册多个并发策略插件钩子，所以一种扩展是机制是创建你自己的HystrixConcurrencyStrategy 对象作为spring bean。Spring cloud会在上下文中搜索该对象并装载。</p>
+<p><font size="4"><b>Health Indicator</b></font><br>The state of the connected circuit breakers are also exposed in the /health endpoint of the calling application.</p>
+<p></p><h2>健康指示器</h2><br>断路器状态同样在调用应用的/health中<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    <span class="string">"hystrix"</span>: &#123;</div><div class="line">        <span class="string">"openCircuitBreakers"</span>: [</div><div class="line">            <span class="string">"StoreIntegration::getStoresByLocationLink"</span></div><div class="line">        ],</div><div class="line">        <span class="string">"status"</span>: <span class="string">"CIRCUIT_OPEN"</span></div><div class="line">    &#125;,</div><div class="line">    <span class="string">"status"</span>: <span class="string">"UP"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p><font size="4"><b>Hystrix Metrics Stream</b></font><br>To enable the Hystrix metrics stream include a dependency on spring-boot-starter-actuator. This will expose the/hystrix.stream as a management endpoint.</p>
+<p></p><h2>Hystrix度量流</h2><br>引入依赖spring-boot-starter-actuator就可以启用Hystrix度量流，通过/hystrix.stream可以看到。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;dependency&gt;</div><div class="line">    &lt;groupId&gt;org.springframework.boot&lt;/groupId&gt;</div><div class="line">    &lt;artifactId&gt;spring-boot-starter-actuator&lt;/artifactId&gt;</div><div class="line">&lt;/dependency&gt;</div></pre></td></tr></table></figure><p></p>
+<p><font size="5"><b>Circuit Breaker: Hystrix Dashboard</b></font><br>One of the main benefits of Hystrix is the set of metrics it gathers about each HystrixCommand. The Hystrix Dashboard displays the health of each circuit breaker in an efficient manner.</p>
+<p></p><h1>断路器：hystrix dashboard</h1><br>Hystrix的一个最大的好处就是聚合了每一个HystrixCommand的度量指标。Hystrix 报表展示了每一个断路器的健康状态。<br><img src="/images/HystrixGraph.png"><br>Figure 3. Hystrix Dashboard<br>To run the Hystrix Dashboard annotate your Spring Boot main class with @EnableHystrixDashboard. You then visit/hystrix and point the dashboard to an individual instances /hystrix.stream endpoint in a Hystrix client application.<br>启用hystrix报表你需要在应用启动类中加入注解 @EnableHystrixDashboard。通过/hystrix.stream就可以查看相关信息了。<p></p>
+<p><font size="4"><b>Turbine</b></font><br>Looking at an individual instances Hystrix data is not very useful in terms of the overall health of the system. Turbine is an application that aggregates all of the relevant /hystrix.stream endpoints into a combined /turbine.stream for use in the Hystrix Dashboard. Individual instances are located via Eureka. Running Turbine is as simple as annotating your main class with the @EnableTurbine annotation (e.g. using spring-cloud-starter-turbine to set up the classpath). All of the documented configuration properties from the Turbine 1 wiki apply. The only difference is that theturbine.instanceUrlSuffix does not need the port prepended as this is handled automatically unlessturbine.instanceInsertPort=false.</p>
+<p></p><h1>Turbine</h1><br>单看一个实例的Hystrix信息对整个系统的健康来说并不是很有意义。Turbine是一个将系统中所有 /hystrix.stream聚合在一起的应用，使用/turbine.stream来展示，实例通过eureka来进行定位。启用turbine也很简单，在应用启动类加入注解 @EnableTurbine （需要加入依赖spring-cloud-starter-turbine）。所有在 the Turbine 1 wiki文档中的配置都被应用。不同的是turbine.instanceUrlSuffix属性不需要预先设定端口（会自动处理），除非turbine.instanceInsertPort=false.<br>The configuration key turbine.appConfig is a list of eureka serviceIds that turbine will use to lookup instances. The turbine stream is then used in the Hystrix dashboard using a url that looks like:<a href="http://my.turbine.sever:8080/turbine.stream?cluster=" target="_blank" rel="external">http://my.turbine.sever:8080/turbine.stream?cluster=</a><clustername>; (the cluster parameter can be omitted if the name is “default”). The cluster parameter must match an entry in turbine.aggregator.clusterConfig. Values returned from eureka are uppercase, thus we expect this example to work if there is an app registered with Eureka called “customers”:<br>turbine.appConfig配置项是服务id的集合，turbine会根据这个集合去获取服务实例。Turbine stream的使用格式是：<br>like:<a href="http://my.turbine.sever:8080/turbine.stream?cluster=" target="_blank" rel="external">http://my.turbine.sever:8080/turbine.stream?cluster=</a><clustername>; （若cluster参数值为default，则可忽略）<br>cluster 参数匹配turbine.aggregator.clusterConfig中设置的值（需要设置为大写）。下面的栗子就是去获取服务id为customers的Hystrix到turbine中。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">turbine:</div><div class="line">  aggregator:</div><div class="line">    clusterConfig: CUSTOMERS</div><div class="line">  appConfig: customers</div></pre></td></tr></table></figure><p></p>
+<p>The clusterName can be customized by a SPEL expression in turbine.clusterNameExpression with root an instance of InstanceInfo. The default value is appName, which means that the Eureka serviceId ends up as the cluster key (i.e. the InstanceInfo for customers has an appName of “CUSTOMERS”). A different example would beturbine.clusterNameExpression=aSGName, which would get the cluster name from the AWS ASG name. Another example:<br>clusterName （也就是url中的cluster=<clustername>）可以通过SPEL表达式进行设置，对应的属性是turbine.clusterNameExpression 。默认值是应用名（spring.application.name），也就是应用注册到eureka的服务id也是turbine cluster的key值。另一个栗子turbine.clusterNameExpression=aSGName,表示clustername将来自AWS ASG name。下面还有一个栗子：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">turbine:</div><div class="line">  aggregator:</div><div class="line">    clusterConfig: SYSTEM,USER</div><div class="line">  appConfig: customers,stores,ui,admin</div><div class="line">  clusterNameExpression: metadata[<span class="string">'cluster'</span>]</div></pre></td></tr></table></figure></clustername></p>
+<p>In this case, the cluster name from 4 services is pulled from their metadata map, and is expected to have values that include “SYSTEM” and “USER”.<br>这个栗子中，cluster名是从它的四个服务的元数据中获取的，并匹配含有”SYSTEM” and “USER”的值。<br>To use the “default” cluster for all apps you need a string literal expression (with single quotes, and escaped with double quotes if it is in YAML as well):<br>使用字符串表达式，设置为default，对所有应用使用turbine（也就是说，可通过clusterNameExpression和clusterConfig配合达到只聚合部分的应用服务）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">turbine:</div><div class="line">  appConfig: customers,stores</div><div class="line">  clusterNameExpression: <span class="string">"'default'"</span></div></pre></td></tr></table></figure></p>
+<p>Spring Cloud provides a spring-cloud-starter-turbine that has all the dependencies you need to get a Turbine server running. Just create a Spring Boot application and annotate it with @EnableTurbine.<br>NOTE    by default Spring Cloud allows Turbine to use the host and port to allow multiple processes per host, per cluster. If you want the native Netflix behaviour built into Turbine that does not allow multiple processes per host, per cluster (the key to the instance id is the hostname), then set the propertyturbine.combineHostPort=false.<br>Spring cloud提供了spring-cloud-starter-turbine依赖，包括了所有的turbine需要的依赖。要启用turbine只需要创建并在启动类中添加@EnableTurbine注解即可。<br>注意：默认spring cloud允许使用host和端口来在一个主机上起多个turbine实例。但是原生的Netflix不允许这样做，这个时候需要设置turbine.combineHostPort=false</p>
+<p><font size="4"><b>Turbine Stream</b></font><br>In some environments (e.g. in a PaaS setting), the classic Turbine model of pulling metrics from all the distributed Hystrix commands doesn’t work. In that case you might want to have your Hystrix commands push metrics to Turbine, and Spring Cloud enables that with messaging. All you need to do on the client is add a dependency to spring-cloud-netflix-hystrix-stream and the spring-cloud-starter-stream-* of your choice (see Spring Cloud Stream documentation for details on the brokers, and how to configure the client credentials, but it should work out of the box for a local broker).</p>
+<p></p><h2>Turbine流</h2><br>在一些环境中（比如paas设置），传统的从分布式hustrix command 中获取urbine度量的模式行不通。在这种情况下，你也许同样希望hustrix command能够将他们的度量指标推送到turbine。Spring cloud使用消息实现了这个功能。你需要做的仅是在客户端中添加 spring-cloud-netflix-hystrix-stream 和spring-cloud-starter-stream-* 依赖（更多细节可以查阅Spring Cloud Stream的文档）<br>On the server side Just create a Spring Boot application and annotate it with @EnableTurbineStream and by default it will come up on port 8989 (point your Hystrix dashboard to that port, any path). You can customize the port using eitherserver.port or turbine.stream.port. If you have spring-boot-starter-web and spring-boot-starter-actuator on the classpath as well, then you can open up the Actuator endpoints on a separate port (with Tomcat by default) by providing a management.port which is different.<br>另一方面，仅是创建spring boot应用并添加 @EnableTurbineStream注解，在默认的情况下将会启动到8989端口（将Hystrix dashboard指定到该端口，任意路径）。可以通过server.port or turbine.stream.port改变该端口。如果同时引入了spring-boot-starter-web and spring-boot-starter-actuator依赖，还能在management.port 指定的不同端口打开指示器。<br>You can then point the Hystrix Dashboard to the Turbine Stream Server instead of individual Hystrix streams. If Turbine Stream is running on port 8989 on myhost, then put <a href="http://myhost:8989" target="_blank" rel="external">http://myhost:8989</a> in the stream input field in the Hystrix Dashboard. Circuits will be prefixed by their respective serviceId, followed by a dot, then the circuit name.<br>这样你就可以将Hystrix Dashboard指向到Turbine Stream服务端，而不只是Hystrix streams。假设Turbine Stream运行在myhost的8989端口上，则设置Hystrix Dashboard中的输入流属性为<a href="http://myhost:8989回路以他们的服务id作为前缀，后面跟点号，然后是回路名。" target="_blank" rel="external">http://myhost:8989回路以他们的服务id作为前缀，后面跟点号，然后是回路名。</a><br>Spring Cloud provides a spring-cloud-starter-turbine-stream that has all the dependencies you need to get a Turbine Stream server running - just add the Stream binder of your choice, e.g. spring-cloud-starter-stream-rabbit. You need Java 8 to run the app because it is Netty-based.<br>Spring cloud提供spring-cloud-starter-turbine-stream给 Turbine Stream服务运行所需要的所有依赖。还需要添加你选择的Stream binder（应该是消息队列），比如 spring-cloud-starter-stream-rabbit。另外需要java 8来运行该应用。<p></p>
+<p><font size="5"><b>Client Side Load Balancer: Ribbon</b></font><br>Ribbon is a client side load balancer which gives you a lot of control over the behaviour of HTTP and TCP clients. Feign already uses Ribbon, so if you are using @FeignClient then this section also applies.</p>
+<p></p><h1>客户端负载均衡：ribbon</h1><br>Ribbon是一个客户端侧的负载均衡，对http和tcp客户端进行负载控制。Feign是基于ribbon之上，所以使用@FeignClient也就使用了ribbon。（所谓客户端侧负载均衡也就是在请求的发起端就进行负载均衡选择，而不是一般上的通过代理（nginx等）进行）<br>A central concept in Ribbon is that of the named client. Each load balancer is part of an ensemble of components that work together to contact a remote server on demand, and the ensemble has a name that you give it as an application developer (e.g. using the @FeignClient annotation). Spring Cloud creates a new ensemble as an ApplicationContexton demand for each named client using RibbonClientConfiguration. This contains (amongst other things) anILoadBalancer, a RestClient, and a ServerListFilter.<br>Ribbon的一个核心概念是命名客户端。Ribbon均衡器包含一系列的组件集合。开发者通过某种方式给该集合赋予名字（例如使用@FeignClient注解）。使用RibbonClientConfiguration可以替换默认的组件实现。这个组件集合包括ILoadBalancer,   RestClient, 和 ServerListFilter。<p></p>
+<p><font size="4"><b>Customizing the Ribbon Client</b></font><br>You can configure some bits of a Ribbon client using external properties in <client>.ribbon.*, which is no different than using the Netflix APIs natively, except that you can use Spring Boot configuration files. The native options can be inspected as static fields in CommonClientConfigKey (part of ribbon-core).<br>Spring Cloud also lets you take full control of the client by declaring additional configuration (on top of theRibbonClientConfiguration) using @RibbonClient. Example:</client></p>
+<p></p><h2>自定义ribbon客户端</h2><br>配置文件的<client>.ribbon.*对ribbon客户端进行一些配置，这和使用原生的netflix api没什么不同。原生api对象通过 CommonClientConfigKey作为静态对象提供。<br>Spring cloud也能够让你完全控制客户端，只需要添加 @RibbonClient注解，例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@RibbonClient(name = <span class="string">"foo"</span>, configuration = FooConfiguration.class)</div><div class="line">public class TestConfiguration &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>In this case the client is composed from the components already in RibbonClientConfiguration together with any inFooConfiguration (where the latter generally will override the former).<br>WARNING    The FooConfiguration has to be @Configuration but take care that it is not in a @ComponentScanfor the main application context, otherwise it will be shared by all the @RibbonClients. If you use@ComponentScan (or @SpringBootApplication) you need to take steps to avoid it being included (for instance put it in a separate, non-overlapping package, or specify the packages to scan explicitly in the@ComponentScan).<br>在这个栗子中，客户端通过RibbonClientConfiguration 的组件进行曝露，FooConfiguration是自定义的配置类，可以进行自定义的负载均衡控制。<br>警告：FooConfiguration类必须添加@Configuration注解，但需要注意的是它不能在@ComponentScan自动注入扫描的范围内。否则会被其他@RibbonClient共享（变成全局配置）。如果你使用了@ComponentScan或@SpringBootApplication，则需要将FooConfiguration类放到不被扫到的包中。<br>Spring Cloud Netflix provides the following beans by default for ribbon (BeanType beanName: ClassName):<br>•    IClientConfig ribbonClientConfig: DefaultClientConfigImpl<br>•    IRule ribbonRule: ZoneAvoidanceRule<br>•    IPing ribbonPing: NoOpPing<br>•    ServerList<server> ribbonServerList: ConfigurationBasedServerList<br>•    ServerListFilter<server> ribbonServerListFilter: ZonePreferenceServerListFilter<br>•    ILoadBalancer ribbonLoadBalancer: ZoneAwareLoadBalancer<br>Spring Cloud Netflix默认会为ribbon提供如下bean：<br>IClientConfig配置实现类：DefaultClientConfigImpl<br>IRule ribbon选择服务规则实现类：ZoneAvoidanceRule<br>IPing服务健康检查确认实现类：NoOpPing<br>ServerList<server>服务列表：ConfigurationBasedServerList<br>ServerListFilter<server>过滤列表：ZonePreferenceServerListFilter<br>ILoadBalancer  均衡器ZoneAwareLoadBalancer<br>（也就是上面这些bean在是默认的实现，可以通过自定义替换这些bean来实现自定义逻辑，这也是ribbon灵活的地方）<br>Creating a bean of one of those type and placing it in a @RibbonClient configuration (such as FooConfigurationabove) allows you to override each one of the beans described. Example:<br>FooConfiguration的一个栗子如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FooConfiguration &#123;</div><div class="line">    @Bean</div><div class="line">    public IPing ribbonPing(IClientConfig config) &#123;</div><div class="line">        <span class="built_in">return</span> new PingUrl();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></server></server></server></server></p>
+<p>This replaces the NoOpPing with PingUrl.<br>这里使用PingUrl替换了默认的NoOpPing </p>
+<p><font size="4"><b>Using Ribbon with Eureka</b></font><br>When Eureka is used in conjunction with Ribbon the ribbonServerList is overridden with an extension ofDiscoveryEnabledNIWSServerList which populates the list of servers from Eureka. It also replaces the IPing interface with NIWSDiscoveryPing which delegates to Eureka to determine if a server is up. The ServerList that is installed by default is a DomainExtractingServerList and the purpose of this is to make physical metadata available to the load balancer without using AWS AMI metadata (which is what Netflix relies on). By default the server list will be constructed with “zone” information as provided in the instance metadata (so on the remote clients seteureka.instance.metadataMap.zone), and if that is missing it can use the domain name from the server hostname as a proxy for zone (if the flag approximateZoneFromHostname is set). Once the zone information is available it can be used in a ServerListFilter. By default it will be used to locate a server in the same zone as the client because the default is aZonePreferenceServerListFilter. The zone of the client is determined the same way as the remote instances by default, i.e. via eureka.instance.metadataMap.zone.</p>
+<p></p><h2>Eureka中使用ribbon</h2><br>Eureka和ribbon结合使用后，ribbonServerList 被重写为DiscoveryEnabledNIWSServerList，从eureka中获取服务列表。同样会使用NIWSDiscoveryPing 替换IPing默认实现，NIWSDiscoveryPing 会向eureka确认服务是否在线。而 ServerList 被DomainExtractingServerList 替换，这主要是为了能够在不使用AWS AMI元数据（Netflix原生依赖）情况下，对负载均衡器来说机器元数据也是可用的。服务端列表默认会在实例信息中添加zone相关的信息（所以在远程客户端设置eureka.instance.metadataMap.zone）。如果没有设置zone，可以用服务端hostname域名作为zone的代理（需要设置approximateZoneFromHostname）。一旦zone信息可用，ServerListFilter中就可以获取到。默认使用ZonePreferenceServerListFilter，被用来在同一个zone中定位服务。客户端的zone配置也是一样的通过eureka.instance.metadataMap.zone进行<br>NOTE    The orthodox “archaius” way to set the client zone is via a configuration property called “@zone”, and Spring Cloud will use that in preference to all other settings if it is available (note that the key will have to be quoted in YAML configuration).<br>NOTE    If there is no other source of zone data then a guess is made based on the client configuration (as opposed to the instance configuration). We take eureka.client.availabilityZones, which is a map from region name to a list of zones, and pull out the first zone for the instance’s own region (i.e. theeureka.client.region, which defaults to “us-east-1” for comatibility with native Netflix).<br>注意：客户端zone的一般设置方式是通过@zone配置项进行，spring cloud优先使用该注解的配置（需要再yaml文件引用该键值）<br>啊啊啊啊啊，这节太难翻译了，算了<p></p>
+<p><font size="4"><b>Example: How to Use Ribbon Without Eureka</b></font><br>Eureka is a convenient way to abstract the discovery of remote servers so you don’t have to hard code their URLs in clients, but if you prefer not to use it, Ribbon and Feign are still quite amenable. Suppose you have declared a@RibbonClient for “stores”, and Eureka is not in use (and not even on the classpath). The Ribbon client defaults to a configured server list, and you can supply the configuration like this</p>
+<p></p><h2>栗子：eureka之外使用ribbon</h2><br>Eureka是一种便捷的抽象远端服务的方式，这样你就不用在客户端中硬编码服务url。但是如果你不打算使用eureka，ribbon和feign还是可以正常使用的。假设stores服务声明了@RibbonClient，但是没有使用eureka，ribbon客户端默认可以配置服务端列表，如下：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">stores:</div><div class="line">  ribbon:</div><div class="line">    listOfServers: example.com,google.com</div></pre></td></tr></table></figure><p></p>
+<p><font size="4"><b>Example: Disable Eureka use in Ribbon</b></font><br>Setting the property ribbon.eureka.enabled = false will explicitly disable the use of Eureka in Ribbon.</p>
+<p></p><h2>栗子：ribbon中禁用eureka</h2><br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ribbon:</div><div class="line">  eureka:</div><div class="line">   enabled: <span class="literal">false</span></div></pre></td></tr></table></figure><p></p>
+<p><font size="4"><b>Using the Ribbon API Directly</b></font><br>You can also use the LoadBalancerClient directly. Example:</p>
+<p></p><h2>直接使用ribbon api</h2><br>可以通过注入LoadBalancerClient bean直接使用ribbon api<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">public class MyClass &#123;</div><div class="line">    @Autowired</div><div class="line">    private LoadBalancerClient loadBalancer;</div><div class="line"></div><div class="line">    public void <span class="function"><span class="title">doStuff</span></span>() &#123;</div><div class="line">        ServiceInstance instance = loadBalancer.choose(<span class="string">"stores"</span>);</div><div class="line">        URI storesUri = URI.create(String.format(<span class="string">"http://%s:%s"</span>, instance.getHost(), instance.getPort()));</div><div class="line">        // ... <span class="keyword">do</span> something with the URI</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p><font size="5"><b>Declarative REST Client: Feign</b></font><br>Feign is a declarative web service client. It makes writing web service clients easier. To use Feign create an interface and annotate it. It has pluggable annotation support including Feign annotations and JAX-RS annotations. Feign also supports pluggable encoders and decoders. Spring Cloud adds support for Spring MVC annotations and for using the sameHttpMessageConverters used by default in Spring Web. Spring Cloud integrates Ribbon and Eureka to provide a load balanced http client when using Feign.</p>
+<p></p><h1>声明式rest客户端：feign</h1><br>Feign 是声明式的web服务客户端，让写web服务客户端变得更加的容易。使用feign创建接口并加上相关注解即可。支持插件式的注解支持，包括feign注解和JAX-RS注解。Feign也支持可插入的编解码。Spring cloud为feign提供同spring MVC注解和HttpMessageConverters一样的注解支持。通过feign spring cloud为ribbon和eureka结合的负载均衡应用提供更便捷的使用方式。<br>Example spring boot app<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">@ComponentScan</div><div class="line">@EnableAutoConfiguration</div><div class="line">@EnableEurekaClient</div><div class="line">@EnableFeignClients</div><div class="line">public class Application &#123;</div><div class="line"></div><div class="line">    public static void main(String[] args) &#123;</div><div class="line">        SpringApplication.run(Application.class, args);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">&#125;</div><div class="line">StoreClient.java</div><div class="line">@FeignClient(<span class="string">"stores"</span>)</div><div class="line">public interface StoreClient &#123;</div><div class="line">    @RequestMapping(method = RequestMethod.GET, value = <span class="string">"/stores"</span>)</div><div class="line">    List&lt;Store&gt; getStores();</div><div class="line"></div><div class="line">    @RequestMapping(method = RequestMethod.POST, value = <span class="string">"/stores/&#123;storeId&#125;"</span>, consumes = <span class="string">"application/json"</span>)</div><div class="line">    Store update(@PathVariable(<span class="string">"storeId"</span>) Long storeId, Store store);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>In the @FeignClient annotation the String value (“stores” above) is an arbitrary client name, which is used to create a Ribbon load balancer (see below for details of Ribbon support). You can also specify a URL using the url attribute (absolute value or just a hostname). The name of the bean in the application context is the fully qualified name of the interface. An alias is also created which is the ‘name’ attribute plus ‘FeignClient’. For the example above,@Qualifier(“storesFeignClient”) could be used to reference the bean. If you want to change the default@Qualifier value, this can be done with the qualifier value in @FeignClient.<br>The Ribbon client above will want to discover the physical addresses for the “stores” service. If your application is a Eureka client then it will resolve the service in the Eureka service registry. If you don’t want to use Eureka, you can simply configure a list of servers in your external configuration (see above for example).<br>上面例子的@FeignClient注解中，stores字符串可以是任务的客户端名，用来创建ribbon负载均衡器（参考below for details of Ribbon support），也可以通过url来指定服务（服务的域名）。@FeignClient注解的接口类生成的bean名和接口名一直。当然也可以通过@FeignClient注解的name属性来指定不同的名字，例如：上面的栗子中默认为@Qualifier(“storesFeignClient”)，用于引用bean，若需要改变@Qualifier的默认值，可以在@FeignClient去改变qualifier 的值（通过name属性）<br>上面栗子的ribbon客户端将获取stores服务的物理地址。如果你的应用是eureka客户端，也可用使用服务id来指定服务。如果不想用eureka，为ribbon指定服务端列表即可（see above for example）</p>
+<p><font size="4"><b>Overriding Feign Defaults</b></font><br>A central concept in Spring Cloud’s Feign support is that of the named client. Each feign client is part of an ensemble of components that work together to contact a remote server on demand, and the ensemble has a name that you give it as an application developer using the @FeignClient annotation. Spring Cloud creates a new ensemble as anApplicationContext on demand for each named client using FeignClientsConfiguration. This contains (amongst other things) an feign.Decoder, a feign.Encoder, and a feign.Contract.</p>
+<p></p><h2>重写feigh默认实现</h2><br>Spring cloud feign的一个核心概念是命名客户端。每一个feign客户端都是由一些特定组件集合在一起，完成连接到远程服务端的工作。这个组件集合由开发者通过@FeignClient注解赋予名字。spring cloud为每一个设置了FeignClientsConfiguration的@FeignClient创建新的组件集合（代替默认实现）。这些组件包括： feign.Decoder, a feign.Encoder, and a feign.Contract.<br>Spring Cloud lets you take full control of the feign client by declaring additional configuration (on top of theFeignClientsConfiguration) using @FeignClient. Example:<br>Spring cloud 让你能够完全控制feign客户端，只要设置自己的FeignClientsConfiguration类，例如：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@FeignClient(name = <span class="string">"stores"</span>, configuration = FooConfiguration.class)</div><div class="line">public interface StoreClient &#123;</div><div class="line">    //..</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>In this case the client is composed from the components already in FeignClientsConfiguration together with any inFooConfiguration (where the latter will override the former).<br>这里通过inFooConfiguration 重写FeignClientsConfiguration 曝露的组件来替换默认的实现行为。<br>WARNING    The FooConfiguration has to be @Configuration but take care that it is not in a @ComponentScanfor the main application context, otherwise it will be used for every @FeignClient. If you use@ComponentScan (or @SpringBootApplication) you need to take steps to avoid it being included (for instance put it in a separate, non-overlapping package, or specify the packages to scan explicitly in the@ComponentScan).<br>NOTE    The serviceId attribute is now deprecated in favor of the name attribute.<br>WARNING    Previously, using the url attribute, did not require the name attribute. Using name is now required.<br>警告：FooConfiguration 类需要加上@Configuration注解，但是不能被@ComponentScan扫描注入。否则将被用于该应用的所有@FeignClient注解的接口（成为全局配置）。如果应用是通过@ComponentScan (or @SpringBootApplication)进行注入，需要将FooConfiguration 类放到扫描不到的包路径中。<br>注意：serviceId 属性已经过期，建议使用name属性<br>警告：以前用url属性是不需要指定name属性的，现在都需要制定name属性。</p>
+<p>Placeholders are supported in the name and url attributes.<br>Name和url属性支持占位符<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@FeignClient(name = <span class="string">"<span class="variable">$&#123;feign.name&#125;</span>"</span>, url = <span class="string">"<span class="variable">$&#123;feign.url&#125;</span>"</span>)</div><div class="line">public interface StoreClient &#123;</div><div class="line">    //..</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>Spring Cloud Netflix provides the following beans by default for feign (BeanType beanName: ClassName):<br>•    Decoder feignDecoder: ResponseEntityDecoder (which wraps a SpringDecoder)<br>•    Encoder feignEncoder: SpringEncoder<br>•    Logger feignLogger: Slf4jLogger<br>•    Contract feignContract: SpringMvcContract<br>•    Feign.Builder feignBuilder: HystrixFeign.Builder<br>•    Client feignClient: if Ribbon is enabled it is a LoadBalancerFeignClient, otherwise the default feign client is used.<br>Spring Cloud Netflix为feign提供下列默认实现的bean：<br>Decoder feign解码：默认实现类ResponseEntityDecoder （封装了SpringDecoder）<br>Encoder feign编码：默认SpringEncoder<br>Logger ：Slf4jLogger<br>Contract  通信方式：SpringMvcContract风格实现<br>Feign.Builder： HystrixFeign.Builder<br>Client ：如果ribbon开启，则是LoadBalancerFeignClient，否则是默认的（我也不知道是什么）<br>The OkHttpClient and ApacheHttpClient feign clients can be used by setting feign.okhttp.enabled orfeign.httpclient.enabled to true, respectively, and having them on the classpath.<br>设置feign.okhttp.enabled orfeign.httpclient.enabled=true可以启用OkHttpClient and ApacheHttpClient，但是记得引入相关依赖。<br>Spring Cloud Netflix does not provide the following beans by default for feign, but still looks up beans of these types from the application context to create the feign client:<br>•    Logger.Level<br>•    Retryer<br>•    ErrorDecoder<br>•    Request.Options<br>•    Collection<requestinterceptor><br>默认Spring Cloud Netflix不提供下列的bean实现，但是仍然会搜索相关类型的bean，若存在则添加到上下文中。<br>Creating a bean of one of those type and placing it in a @FeignClient configuration (such as FooConfiguration above) allows you to override each one of the beans described. Example:<br>创建类似FooConfiguration 的bean，使用如下方式可以替换默认的组件实现：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FooConfiguration &#123;</div><div class="line">    @Bean</div><div class="line">    public Contract <span class="function"><span class="title">feignContract</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> new feign.Contract.Default();</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    @Bean</div><div class="line">    public BasicAuthRequestInterceptor <span class="function"><span class="title">basicAuthRequestInterceptor</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> new BasicAuthRequestInterceptor(<span class="string">"user"</span>, <span class="string">"password"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></requestinterceptor></p>
+<p>This replaces the SpringMvcContract with feign.Contract.Default and adds a RequestInterceptor to the collection of RequestInterceptor.<br>Default configurations can be specified in the @EnableFeignClients attribute defaultConfiguration in a similar manner as described above. The difference is that this configuration will apply to all feign clients.<br>上面栗子用feign.Contract.Default替换了默认的SpringMvcContract ，并提供了一个RequestInterceptor。<br>@EnableFeignClients中的defaultConfiguration 属性定了所有默认组件实现，使用方式和上面栗子同样的友好，只是defaultConfiguration 会作用到应用的所有feign接口。</p>
+<p><font size="4"><b>Feign Hystrix Support</b></font><br>If Hystrix is on the classpath, by default Feign will wrap all methods with a circuit breaker. Returning acom.netflix.hystrix.HystrixCommand is also available. This lets you use reactive patterns (with a call to.toObservable() or .observe() or asynchronous use (with a call to .queue()).<br>To disable Hystrix support for Feign, set feign.hystrix.enabled=false.<br>To disable Hystrix support on a per-client basis create a vanilla Feign.Builder with the “prototype” scope, e.g.:</p>
+<p></p><h2>Feign hystrix 支持</h2><br>若hystrix在类路径中，默认feign会封装断路器的所有操作。也可以使用com.netflix.hystrix.HystrixCommand。通过.toObservable() or .observe()或者异步调用（ .queue()）实现反馈机制。<br> feign.hystrix.enabled=false.关闭hystrix对feign支持（全局）。<br>可以对每个客户端设置是否支持hystrix，在如FooConfiguration类中的Feign.Builder加入@Scope(“prototype”)注解即可关闭hystrix对氮气feign接口的支持。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FooConfiguration &#123;</div><div class="line">    @Bean</div><div class="line">	@Scope(<span class="string">"prototype"</span>)</div><div class="line">	public Feign.Builder <span class="function"><span class="title">feignBuilder</span></span>() &#123;</div><div class="line">		<span class="built_in">return</span> Feign.builder();</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p><font size="4"><b>Feign Hystrix Fallbacks</b></font><br>Hystrix supports the notion of a fallback: a default code path that is executed when they circuit is open or there is an error. To enable fallbacks for a given @FeignClient set the fallback attribute to the class name that implements the fallback.</p>
+<p></p><h2>Feign的hystrix回调</h2><br>Hystrix支持回调：当回路开启或者发生错误后被执行的代码。@FeignClient中启用回调需要设置fallback 属性，指定类名，并实现回调代码。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@FeignClient(name = <span class="string">"hello"</span>, fallback = HystrixClientFallback.class)</div><div class="line">protected interface HystrixClient &#123;</div><div class="line">    @RequestMapping(method = RequestMethod.GET, value = <span class="string">"/hello"</span>)</div><div class="line">    Hello iFailSometimes();</div><div class="line">&#125;</div><div class="line"></div><div class="line">static class HystrixClientFallback implements HystrixClient &#123;</div><div class="line">    @Override</div><div class="line">    public Hello <span class="function"><span class="title">iFailSometimes</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> new Hello(<span class="string">"fallback"</span>);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>WARNING    There is a limitation with the implementation of fallbacks in Feign and how Hystrix fallbacks work. Fallbacks are currently not supported for methods that return com.netflix.hystrix.HystrixCommandand rx.Observable.<br>警告：feign中实现回调有一定的限制。不支持返回com.netflix.hystrix.HystrixCommand和rx.Observable对象的方法</p>
+<p><font size="4"><b>Feign Inheritance Support</b></font><br>Feign supports boilerplate apis via single-inheritance interfaces. This allows grouping common operations into convenient base interfaces.</p>
+<p></p><h2>Feign继承支持</h2><br>Feign支持继承。允许将通用的操作抽象到一个基础接口中<br>UserService.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">public interface UserService &#123;</div><div class="line"></div><div class="line">    @RequestMapping(method = RequestMethod.GET, value =<span class="string">"/users/&#123;id&#125;"</span>)</div><div class="line">    User getUser(@PathVariable(<span class="string">"id"</span>) long id);</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>UserResource.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">@RestController</div><div class="line">public class UserResource implements UserService &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>UserClient.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">package project.user;</div><div class="line"></div><div class="line">@FeignClient(<span class="string">"users"</span>)</div><div class="line">public interface UserClient extends UserService &#123;</div><div class="line"></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>NOTE    It is generally not advisable to share an interface between a server and a client. It introduces tight coupling, and also actually doesn’t work with Spring MVC in its current form (method parameter mapping is not inherited).<br>注意：服务端和客户端共享同一接口是不合适的。这导致强关联，并且在spring MVC下也并不起作用（参数映射注解不会被继承）</p>
+<p><font size="4"><b>Feign request/response compression</b></font><br>You may consider enabling the request or response GZIP compression for your Feign requests. You can do this by enabling one of the properties:</p>
+<p></p><h2>Feign请求/响应压缩</h2><br>可以对feign的请求和响应进行GZIP压缩，设置如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">feign.compression.request.enabled=<span class="literal">true</span></div><div class="line">feign.compression.response.enabled=<span class="literal">true</span></div></pre></td></tr></table></figure><p></p>
+<p>Feign request compression gives you settings similar to what you may set for your web server:<br>Feign请求压缩设置类似web服务器设置<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">feign.compression.request.enabled=<span class="literal">true</span></div><div class="line">feign.compression.request.mime-types=text/xml,application/xml,application/json</div><div class="line">feign.compression.request.min-request-size=2048</div></pre></td></tr></table></figure></p>
+<p>These properties allow you to be selective about the compressed media types and minimum request threshold length.<br>这些配置项允许你有选择的对媒体消息和请求最小压缩长度进行压缩。</p>
+<p><font size="4"><b>Feign logging</b></font><br>A logger is created for each Feign client created. By default the name of the logger is the full class name of the interface used to create the Feign client. Feign logging only responds to the DEBUG level.</p>
+<p></p><h2>Feign日志</h2><br>每个feign客户端都会创建日志。默认日志名是feign接口类的全称。Debug级别。<br>可以对每个feign接口类定义日志级别 Logger.Level<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">logging.level.project.user.UserClient: DEBUG</div></pre></td></tr></table></figure><p></p>
+<p>The Logger.Level object that you may configure per client, tells Feign how much to log. Choices are:<br>•    NONE, No logging (DEFAULT).<br>•    BASIC, Log only the request method and URL and the response status code and execution time.<br>•    HEADERS, Log the basic information along with request and response headers.<br>•    FULL, Log the headers, body, and metadata for both requests and responses.<br>For example, the following would set the Logger.Level to FULL:<br>日志级别选择有：<br>NONE，不进行日志（默认）<br>BASIC，仅日志请求方法名和url和响应状态码和执行时长<br>HEADERS，日志请求和响应头的基本信息<br>FULL，日志请求和响应头、body以及请求和响应的元数据信息<br>例如，下面将日志基本设置为FULL<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">@Configuration</div><div class="line">public class FooConfiguration &#123;</div><div class="line">    @Bean</div><div class="line">    Logger.Level <span class="function"><span class="title">feignLoggerLevel</span></span>() &#123;</div><div class="line">        <span class="built_in">return</span> Logger.Level.FULL;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p><font size="5"><b>External Configuration: Archaius</b></font><br>Archaius is the Netflix client side configuration library. It is the library used by all of the Netflix OSS components for configuration. Archaius is an extension of the Apache Commons Configuration project. It allows updates to configuration by either polling a source for changes or for a source to push changes to the client. Archaius uses Dynamic<type>Property classes as handles to properties.</type></p>
+<p></p><h1>额外配置：archaius</h1><br>Archaius 是Netflix客户端侧的配置库，所有Netflix OSS组件都使用它作为配置库。Archaius是Apache Commons Configuration 的扩展项目。它通过拉取配置源配置变化或者配置源将变化推送进行配置更新。Archaius使用Dynamic<type>Property类（如DynamicStringProperty）作为配置处理类。<br>Archaius Example<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">class ArchaiusTest &#123;</div><div class="line">    DynamicStringProperty myprop = DynamicPropertyFactory</div><div class="line">            .getInstance()</div><div class="line">            .getStringProperty(<span class="string">"my.prop"</span>);</div><div class="line"></div><div class="line">    void <span class="function"><span class="title">doSomething</span></span>() &#123;</div><div class="line">        OtherClass.someMethod(myprop.get());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>Archaius has its own set of configuration files and loading priorities. Spring applications should generally not use Archaius directly, but the need to configure the Netflix tools natively remains. Spring Cloud has a Spring Environment Bridge so Archaius can read properties from the Spring Environment. This allows Spring Boot projects to use the normal configuration toolchain, while allowing them to configure the Netflix tools, for the most part, as documented.<br>Archaius有自己的配置文件和已加载配置项集合，spring应用通常不直接使用Archaius，但是需要保留Netflix tools。Spring cloud为Archaius提供了相应的环境，Archaius可以直接从中获取配置。如此spring boot应用就能够使用相关的配置工具，同时也能够配置大多数的Netflix tools。</p>
+<p><font size="5"><b>Router and Filter: Zuul</b></font><br>Routing in an integral part of a microservice architecture. For example, / may be mapped to your web application,/api/users is mapped to the user service and /api/shop is mapped to the shop service. Zuul is a JVM based router and server side load balancer by Netflix.</p>
+<p></p><h1>路由和过滤器：zuul</h1><br>微服务架构中路由是必须的功能。比如，/ 可能要映射到你应用的根目录，而/api/users需要映射到user服务， /api/shop 映射到shop服务。Zuul是Netflix中一个基于JVM的路由和服务端侧的负载均衡。<br>Netflix uses Zuul for the following:<br>•    Authentication<br>•    Insights<br>•    Stress Testing<br>•    Canary Testing<br>•    Dynamic Routing<br>•    Service Migration<br>•    Load Shedding<br>•    Security<br>•    Static Response handling<br>•    Active/Active traffic management<br>Zuul’s rule engine allows rules and filters to be written in essentially any JVM language, with built in support for Java and Groovy.<br>Netflix uses Zuul用于<br>授权认证<br>内部全知（Insights原义洞察，不知道咋个翻译）<br>压力测试<br>金丝雀测试<br>动态路由<br>服务迁移<br>降低负荷<br>安全性<br>静态响应处理<br>动态流量管理<br>Zuul的规则引擎允许在基于JVM的语言上重写规则和过滤器，目前只支持java 和groovy。<br>NOTE    The configuration property zuul.max.host.connections has been replaced by two new properties,zuul.host.maxTotalConnections and zuul.host.maxPerRouteConnections which default to 200 and 20 respectively.<br>NOTE    Default Hystrix isolation pattern (ExecutionIsolationStrategy) for all routes is SEMAPHORE.zuul.ribbonIsolationStrategy can be changed to THREAD if this isolation pattern is preferred.<br>注意：配置项zuul.max.host.connections已经被zuul.host.maxTotalConnections and zuul.host.maxPerRouteConnections替换，默认分别是200和20.<br>注意：对所有路由默认的Hystrix隔离模式是SEMAPHORE（信号灯模式，应该是类似同步锁），可以通过zuul.ribbonIsolationStrategy修改为THREAD（并发？）模式。<p></p>
+<p><font size="4"><b>Embedded Zuul Reverse Proxy</b></font><br>Spring Cloud has created an embedded Zuul proxy to ease the development of a very common use case where a UI application wants to proxy calls to one or more back end services. This feature is useful for a user interface to proxy to the backend services it requires, avoiding the need to manage CORS and authentication concerns independently for all the backends.</p>
+<p></p><h2>内嵌Zuul反向代理</h2><br>Spring cloud内嵌了zuul的反向代理，默认设置了对UI应用调用服务比较通用的的设置。避免了对所有的后端服务单独进行繁琐的CORS操作管理和安全认证。<br>To enable it, annotate a Spring Boot main class with @EnableZuulProxy, and this forwards local calls to the appropriate service. By convention, a service with the ID “users”, will receive requests from the proxy located at /users (with the prefix stripped). The proxy uses Ribbon to locate an instance to forward to via discovery, and all requests are executed in a hystrix command, so failures will show up in Hystrix metrics, and once the circuit is open the proxy will not try to contact the service.<br>要启用内嵌zuul，在spring boot启动类加入注解 @EnableZuulProxy，将本地请求转发到合适的服务中。约定类似名为”users”的服务奖接收来自代理 /users（去除前缀）的请求。代理使用ribbon进行服务定位，所有的请求都会在hystrix command内执行，因此失败会在Hystrix metrics中展示。一旦断路打开，代理将不再尝试连接该服务。<br>NOTE    the Zuul starter does not include a discovery client, so for routes based on service IDs you need to provide one of those on the classpath as well (e.g. Eureka is one choice).<br>注意：zuul starter（spring cloud提供的依赖starter）不包括服务发现客户端，因此要实现基于服务id的服务发现，需要提供某种服务发现机制（如eureka）。<br>To skip having a service automatically added, set zuul.ignored-services to a list of service id patterns. If a service matches a pattern that is ignored, but also included in the explicitly configured routes map, then it will be unignored. Example:<br>为了避免服务自动添加到代理中，可以设置zuul.ignored-services，配置需要忽略的服务id列表。如果服务id匹配被忽略的服务列表，但又被包含在路由映射中（zuul.routes）则服务不会被忽略，例如：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> ignoredServices: <span class="string">'*'</span></div><div class="line"> routes:</div><div class="line">   users: /myusers/**</div></pre></td></tr></table></figure><p></p>
+<p>In this example, all services are ignored except “users”.<br>例子中，除了”users”之外，所有其他服务都被忽略<br>To augment or change the proxy routes, you can add external configuration like the following:<br>通过下面方式可以改变路由映射：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users: /myusers/**</div></pre></td></tr></table></figure></p>
+<p>This means that http calls to “/myusers” get forwarded to the “users” service (for example “/myusers/101” is forwarded to “/101”).<br>这意味着http请求到” /myusers”会被转发到”users”服务（比如”/myusers/101”转发到 “/101”）<br>To get more fine-grained control over a route you can specify the path and the serviceId independently:<br>分别指定路径和服务id，能够更全面的控制路由<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users:</div><div class="line">     path: /myusers/**</div><div class="line">     serviceId: users_service</div></pre></td></tr></table></figure></p>
+<p>This means that http calls to “/myusers” get forwarded to the “users_service” service. The route has to have a “path” which can be specified as an ant-style pattern, so “/myusers/<em>“ only matches one level, but “/myusers/**” matches hierarchically.<br>这表示http请求”/myusers”将转发到”users_service”服务。”/myusers/</em>“只匹配一级目录，”/myusers/**”可以匹配任意级别（注意，若未指定serviceId，则默认使用zuul.routes.xxxx 中的xxx作为服务名）<br>The location of the backend can be specified as either a “serviceId” (for a service from discovery) or a “url” (for a physical location), e.g.<br>可以通过”serviceId”或者url进行服务定位，如：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users:</div><div class="line">     path: /myusers/**</div><div class="line">     url: http://example.com/users_service</div></pre></td></tr></table></figure></p>
+<p>These simple url-routes don’t get executed as a HystrixCommand nor can you loadbalance multiple URLs with Ribbon. To achieve this, specify a service-route and configure a Ribbon client for the serviceId (this currently requires disabling Eureka support in Ribbon: see above for more information), e.g.<br>url方式请求不会再HystrixCommand 中执行，也无法使用ribbon负载均衡。<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line">  routes:</div><div class="line">    users:</div><div class="line">      path: /myusers/**</div><div class="line">      serviceId: users</div><div class="line"></div><div class="line">ribbon:</div><div class="line">  eureka:</div><div class="line">    enabled: <span class="literal">false</span></div><div class="line"></div><div class="line">users:</div><div class="line">  ribbon:</div><div class="line">    listOfServers: example.com,google.com</div></pre></td></tr></table></figure></p>
+<p>You can provide convention between serviceId and routes using regexmapper. It uses regular expression named groups to extract variables from serviceId and inject them into a route pattern.<br>除此之外，还可以通过路由表达式方式进行路由配置。使用的是正常的正则表达式。<br>ApplicationConfiguration.java<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">@Bean</div><div class="line">public PatternServiceRouteMapper <span class="function"><span class="title">serviceRouteMapper</span></span>() &#123;</div><div class="line">    <span class="built_in">return</span> new PatternServiceRouteMapper(</div><div class="line">        <span class="string">"(?&lt;name&gt;^.+)-(?&lt;version&gt;v.+$)"</span>,</div><div class="line">        <span class="string">"<span class="variable">$&#123;version&#125;</span>/<span class="variable">$&#123;name&#125;</span>"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>This means that a serviceId “myusers-v1” will be mapped to route “/v1/myusers/<strong>“. Any regular expression is accepted but all named groups must be present in both servicePattern and routePattern. If servicePattern does not match a serviceId, the default behavior is used. In the example above, a serviceId “myusers” will be mapped to route “/myusers/</strong>“ (no version detected) This feature is disable by default and only applies to discovered services.<br>相当于路径”/v1/myusers/<strong>“将映射到serviceId “myusers-v1” 。serviceId和路由的正则表达式都必须包括所有命名组（不懂）。若服务表达式不匹配请求的服务id，则会使用默认行为。在这个例子中，服务”myusers”被映射到路由”/myusers/</strong>“（未检测到版本号）。默认该功能是不可用的，并且仅用于已发现的服务。<br>To add a prefix to all mappings, set zuul.prefix to a value, such as /api. The proxy prefix is stripped from the request before the request is forwarded by default (switch this behaviour off with zuul.stripPrefix=false). You can also switch off the stripping of the service-specific prefix from individual routes, e.g.<br>默认path的前缀是会被去除的，比如/myusers/101/<strong> 映射到users服务的/101/</strong>接口。通过设置zuul.stripPrefix=false可改变默认行为，这样/myusers/101/<strong>会映射到users的/myusers/101/</strong>接口，例如<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users:</div><div class="line">     path: /myusers/**</div><div class="line">     stripPrefix: <span class="literal">false</span></div></pre></td></tr></table></figure></p>
+<p>In this example, requests to “/myusers/101” will be forwarded to “/myusers/101” on the “users” service.<br>The zuul.routes entries actually bind to an object of type ZuulProperties. If you look at the properties of that object you will see that it also has a “retryable” flag. Set that flag to “true” to have the Ribbon client automatically retry failed requests (and if you need to you can modify the parameters of the retry operations using the Ribbon client configuration).<br>实际上 zuul.routes会被绑定到ZuulProperties的对象中，查看该对象可以看到一个” retryable”的标志。设置改标志位true可以让ribbon自动对失败的请求进行重试（如果需要，你可以通过ribbon客户端配置来修改重试操作的参数）<br>The X-Forwarded-Host header is added to the forwarded requests by default. To turn it off set zuul.addProxyHeaders = false. The prefix path is stripped by default, and the request to the backend picks up a header “X-Forwarded-Prefix” (“/myusers” in the examples above).<br>默认会添加X-Forwarded-Host头信息到转发请求。通过zuul.addProxyHeaders = false可以关闭该设置。默认路径前缀将会去除，但是会在请求头中添加”X-Forwarded-Prefix”（在上面例子中是”/myusers”）<br>An application with @EnableZuulProxy could act as a standalone server if you set a default route (“/“), for examplezuul.route.home: / would route all traffic (i.e. “/**”) to the “home” service.<br>带@EnableZuulProxy 注解的应用能够作为独立服务端，若设置了默认的路由请求（”/”）比如zuul.route.home: /，则所有的流量将会转到”home”服务。<br>If more fine-grained ignoring is needed, you can specify specific patterns to ignore. These patterns are evaluated at the start of the route location process, which means prefixes should be included in the pattern to warrant a match. Ignored patterns span all services and supersede any other route specification.<br>如果需要更强大的忽略设置，可以指定忽略模式（通配符方式）。在定位开始时会校验请求是否匹配忽略模式，也就是说是使用转向前的请求进行匹配（包括前缀）。忽略模式对所有路由设置和服务有效。<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> ignoredPatterns: /**/admin/**</div><div class="line"> routes:</div><div class="line">   users: /myusers/**</div></pre></td></tr></table></figure></p>
+<p>This means that all calls such as “/myusers/101” will be forwarded to “/101” on the “users” service. But calls including “/admin/“ will not resolve.<br>例中所有”/myusers/101”被转向到”users” 的”/101”，但除了包含”/admin/“的请求<br>WARNING    If you need your routes to have their order preserved you need to use a YAML file as the ordering will be lost using a properties file. For example:<br>警告：若需要保持路由匹配顺序，需要将路由定义在YAML文件中，因为properties文件会丢失顺序，比如：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users:</div><div class="line">     path: /myusers/**</div><div class="line">   legacy:</div><div class="line">     path: /**</div></pre></td></tr></table></figure></p>
+<p>If you were to use a properties file, the legacy path may end up in front of the users path rendering the users path unreachable.<br>这里优先匹配/myusers/<strong>映射到users服务，然后才是/</strong>到legacy服务。若是properties文件则可能将/myusers/**映射到legacy服务。</p>
+<p><font size="4"><b>Cookies and Sensitive Headers</b></font><br>It’s OK to share headers between services in the same system, but you probably don’t want sensitive headers leaking downstream into external servers. You can specify a list of ignored headers as part of the route configuration. Cookies play a special role because they have well-defined semantics in browsers, and they are always to be treated as sensitive. If the consumer of your proxy is a browser, then cookies for downstream services also cause problems for the user because they all get jumbled up (all downstream services look like they come from the same place).</p>
+<p></p><h2>Cookies和敏感头信息</h2><br>在同一个系统中共享请求头是正常的，但是有时候你可能不想将请求头的敏感信息泄露到外部服务器。可以在路由配置中设置需要忽略的头信息列表。Cookies是一个特殊的角色，它在浏览器中有良好的语义定义，并且总是被认为是敏感的。如果你的代理直接面向浏览器，传递给下游服务的cookies会给用户带来问题，因为cookies都乱套了（看起来所有服务都是来自同一个地方）<br>If you are careful with the design of your services, for example if only one of the downstream services sets cookies, then you might be able to let them flow from the backend all the way up to the caller. Also, if your proxy sets cookies and all your back end services are part of the same system, it can be natural to simply share them (and for instance use Spring Session to link them up to some shared state). Other than that, any cookies that get set by downstream services are likely to be not very useful to the caller, so it is recommended that you make (at least) “Set-Cookie” and “Cookie” into sensitive headers for routes that are not part of your domain. Even for routes that are part of your domain, try to think carefully about what it means before allowing cookies to flow between them and the proxy.<br>The sensitive headers can be configured as a comma-separated list per route, e.g.<br>如果你对服务的设计比较谨慎，比如假设仅有一个下游服务设置cookies，那么你能够让它总是可以返回到调用者。同样的，如果代理也设置cookies，并且所有服务都是整个系统的一部分，那么共享cookies是很自然的事（比如使用Spring Session将服务连接在一起使用共同的状态）。除此之外，不属于你系统的下游服务操作的任何cookies，对调用者来说可能都没什么用。所以建议在路由中至少将”Set-Cookie” and “Cookie”设置为敏感的头信息。即使是在同一个系统中的路由，也应该谨慎的考虑这些头信息的意义。<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   users:</div><div class="line">     path: /myusers/**</div><div class="line">     sensitiveHeaders: Cookie,Set-Cookie,Authorization</div><div class="line">     url: https://downstream</div></pre></td></tr></table></figure><p></p>
+<p>Sensitive headers can also be set globally by setting zuul.sensitiveHeaders. If sensitiveHeaders is set on a route, this will override the global sensitiveHeaders setting.<br>敏感头信息可以通过zuul.sensitiveHeaders设置为全局作用，若路由中也设置了sensitiveHeaders（如zuul.routes.users.sensitiveHeaders） ，则当前路由的敏感头信息设置会覆盖全局设置。<br>NOTE    this is the default value for sensitiveHeaders, so you don’t need to set it unless you want it to be different. N.B. this is new in Spring Cloud Netflix 1.1 (in 1.0 the user had no control over headers and all cookies flow in both directions).<br>注意：默认是不需要设置sensitiveHeaders。另外这个特性是Spring Cloud Netflix 1.1提供的<br>In addition to the per-route sensitive headers, you can set a global value for zuul.ignoredHeaders for values that should be discarded (both request and response) during interactions with downstream services. By default these are empty, if Spring Security is not on the classpath, and otherwise they are initialized to a set of well-known “security” headers (e.g. involving caching) as specified by Spring Security. The assumption in this case is that the downstream services might add these headers too, and we want the values from the proxy.<br>另外，每个路由敏感头信息，可以通过zuul.ignoredHeaders进行全局设置，这些设置的敏感头信息在调用下游服务时将被路由丢弃。默认Spring Security不在类路径中，该集合是空的，否则会初始加入一系列的”security”相关的header（包括缓存）。主要是假设下游服务可能也会添加这样的头信息，但是我们更希望获取来自代理的。</p>
+<p><font size="4"><b>The Routes Endpoint</b></font><br>If you are using @EnableZuulProxy with tha Spring Boot Actuator you will enable (by default) an additional endpoint, available via HTTP as /routes. A GET to this endpoint will return a list of the mapped routes. A POST will force a refresh of the existing routes (e.g. in case there have been changes in the service catalog).</p>
+<p></p><h2>路由信息展示应用</h2><br>如果配置Spring Boot Actuator并使用了 @EnableZuulProxy，默认会附加一个路由信息展示应用。通过http请求/routes可以访问。Get请求会返回路由映射列表，post请求会强制刷新当前路由信息（以防路由信息发生了变化）<br>NOTE    the routes should respond automatically to changes in the service catalog, but the POST to /routes is a way to force the change to happen immediately.<br>注意：路由应当自动响应服务目录的变化，post是一种强制生效的主动刷新方式。<p></p>
+<p><font size="4"><b>Strangulation Patterns and Local Forwards</b></font><br>A common pattern when migrating an existing application or API is to “strangle” old endpoints, slowly replacing them with different implementations. The Zuul proxy is a useful tool for this because you can use it to handle all traffic from clients of the old endpoints, but redirect some of the requests to new ones.</p>
+<p></p><h2>窒息模式和本地转发</h2><br>应用和api迁移的通常做法是慢慢窒息旧的应用，逐步用新的实现替换。Zuul代理应对这种情况游刃有余。你可以将用旧的应用处理所有流量，但将部分导向到新的。<br>Example configuration:<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   first:</div><div class="line">     path: /first/**</div><div class="line">     url: http://first.example.com</div><div class="line">   second:</div><div class="line">     path: /second/**</div><div class="line">     url: forward:/second</div><div class="line">   third:</div><div class="line">     path: /third/**</div><div class="line">     url: forward:/3rd</div><div class="line">   legacy:</div><div class="line">     path: /**</div><div class="line">     url: http://legacy.example.com</div></pre></td></tr></table></figure><p></p>
+<p>In this example we are strangling the “legacy” app which is mapped to all requests that do not match one of the other patterns. Paths in /first/<strong> have been extracted into a new service with an external URL. And paths in /second/</strong>are forwared so they can be handled locally, e.g. with a normal Spring @RequestMapping. Paths in /third/<strong> are also forwarded, but with a different prefix (i.e. /third/foo is forwarded to /3rd/foo).<br>NOTE    The ignored patterns aren’t completely ignored, they just aren’t handled by the proxy (so they are also effectively forwarded locally).<br>例子中我们将”勒死”legacy应用，它映射到所有的请求。但/first/</strong>会转向到新的服务，同样/second/<strong>和/third/</strong> 映射到本地（zuul所在应用）的请求。<br>注意：前面说的忽略模式并不是真正的忽略，只是不被代理处理（因此还是可以被本地处理的）</p>
+<p><font size="4"><b>Uploading Files through Zuul</b></font><br>If you @EnableZuulProxy you can use the proxy paths to upload files and it should just work as long as the files are small. For large files there is an alternative path which bypasses the Spring DispatcherServlet (to avoid multipart processing) in “/zuul/<em>“. I.e. if zuul.routes.customers=/customers/** then you can POST large files to “/zuul/customers/</em>“. The servlet path is externalized via zuul.servletPath. Extremely large files will also require elevated timeout settings if the proxy route takes you through a Ribbon load balancer, e.g.</p>
+<p></p><h2>通过zuul上传文件</h2><br>@EnableZuulProxy注解后，你可以上传小文件。对于大文件通过DispatcherServlet 有另外的路径”/zuul/<em>“（避免multipart processing)）。也就是假设zuul.routes.customers=/customers/**，则可以通过”/zuul/customers/</em>“post上传大文件。这个路径通过zuul.servletPath提供。特大文件可能会造成超时，这个时候如果是使用ribbon作为负载均衡，你需要通过修改下面两个配置避免失败：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">hystrix.command.default.execution.isolation.thread.timeoutInMilliseconds: 60000</div><div class="line">ribbon:</div><div class="line">  ConnectTimeout: 3000</div><div class="line">  ReadTimeout: 60000</div></pre></td></tr></table></figure><p></p>
+<p>Note that for streaming to work with large files, you need to use chunked encoding in the request (which some browsers do not do by default). E.g. on the command line:<br>注意到要让大文件流正常，需要在请求中设置chunked块编码（某些浏览器是默认的设置）<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ curl -v -H <span class="string">"Transfer-Encoding: chunked"</span> \</div><div class="line">    -F <span class="string">"file=@mylarge.iso"</span> localhost:9999/zuul/simple/file</div></pre></td></tr></table></figure></p>
+<p><font size="4"><b>Plain Embedded Zuul</b></font><br>You can also run a Zuul server without the proxying, or switch on parts of the proxying platform selectively, if you use@EnableZuulServer (instead of @EnableZuulProxy). Any beans that you add to the application of type ZuulFilter will be installed automatically, as they are with @EnableZuulProxy, but without any of the proxy filters being added automatically.</p>
+<p></p><h2>简单内嵌zuul</h2><br>如果你使用@EnableZuulServer (而不是 @EnableZuulProxy)，也可以不使用代理功能运行Zuul，或者有选择的打开部分的代理能力。这样任何ZuulFilter 类型的bean都会被自动加载，但不会自动加载路由过滤器<br>In this case the routes into the Zuul server are still specified by configuring “zuul.routes.<em>“, but there is no service discovery and no proxying, so the “serviceId” and “url” settings are ignored. For example:<br>这种情况下，zuul服务端的路由仍然是通过”zuul.routes.</em>“设置，但是没有服务发现能力和路由能力，因此”serviceId” and “url”会被忽略，如：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">zuul:</div><div class="line"> routes:</div><div class="line">   api: /api/**</div></pre></td></tr></table></figure><p></p>
+<p>maps all paths in “/api/<strong>“ to the Zuul filter chain.<br>将所有”/api/</strong>“的路径映射到zuul过滤链</p>
+<p><font size="4"><b>Disable Zuul Filters</b></font><br>Zuul for Spring Cloud comes with a number of ZuulFilter beans enabled by default in both proxy and server mode. Seethe zuul filters package for the possible filters that are enabled. If you want to disable one, simply set zuul.<simpleclassname>.<filtertype>.disable=true. By convention, the package after filters is the Zuul filter type. For example to disable org.springframework.cloud.netflix.zuul.filters.post.SendResponseFilter setzuul.SendResponseFilter.post.disable=true.</filtertype></simpleclassname></p>
+<p></p><h2>关闭zuul过滤器</h2><br>默认情况下，spring cloud中的zuul不管是在代理模式还是服务端模式，都会自动启用一批的ZuulFilter  bean。默认启用过滤器参考Seethe zuul filters package 。如果你想停用启用一个，设置zuul.<simpleclassname>.<filtertype>.disable=true。默认包名中filters 之后是过滤器类型，比如禁用 org.springframework.cloud.netflix.zuul.filters.post.SendResponseFilter 设置zuul.SendResponseFilter.post.disable=true.<p></p>
+<p><font size="4"><b>Polyglot support with Sidecar</b></font><br>Do you have non-jvm languages you want to take advantage of Eureka, Ribbon and Config Server? The Spring Cloud Netflix Sidecar was inspired by Netflix Prana. It includes a simple http api to get all of the instances (ie host and port) for a given service. You can also proxy service calls through an embedded Zuul proxy which gets its route entries from Eureka. The Spring Cloud Config Server can be accessed directly via host lookup or through the Zuul Proxy. The non-jvm app should implement a health check so the Sidecar can report to eureka if the app is up or down.</p>
+<p></p><h2>Sidecar多语言支持</h2><br>你有非jvm语言也希望使用Eureka, Ribbon and Config Server的优势吗？The Spring Cloud Netflix Sidecar受 Netflix Prana启发，它包括一个获取某个服务的所有实例（host和port组成）的简单http api。你也可以通过内嵌zuul进行代理服务，zuul从eureka中获取服务。The Spring Cloud Config Server可以直接通过host搜索或者zuul代理访问。非jvm应用需要实现健康检查，这样sidecar才能够将健康信息报告到eureka中。<br>To enable the Sidecar, create a Spring Boot application with @EnableSidecar. This annotation includes@EnableCircuitBreaker, @EnableDiscoveryClient, and @EnableZuulProxy. Run the resulting application on the same host as the non-jvm application.<br>启用sidecar，需要创建带 @EnableSidecar注解的spring boot应用。这个注解包含了EnableCircuitBreaker, @EnableDiscoveryClient, and @EnableZuulProxy。在同一个主机中运行生成应用作为非jvm应用。<br>To configure the side car add sidecar.port and sidecar.health-uri to application.yml. The sidecar.portproperty is the port the non-jvm app is listening on. This is so the Sidecar can properly register the app with Eureka. Thesidecar.health-uri is a uri accessible on the non-jvm app that mimicks a Spring Boot health indicator. It should return a json document like the following:<br>添加sidecar.port and sidecar.health-uri to application.yml来配置sidecar。sidecar.port是非jvm应用监听的端口。这样sidecar就可以将应用正常的注册到eureka中。sidecar.health-uri是非jvm应用提供给Spring Boot health indicator进行健康检查的url。它的返回数据格式如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">health-uri-document</div><div class="line">&#123;</div><div class="line">  <span class="string">"status"</span>:<span class="string">"UP"</span></div><div class="line">&#125;</div></pre></td></tr></table></figure><p></p>
+<p>Here is an example application.yml for a Sidecar application:<br>下面是sidecar yml文件的例子：<br>application.yml<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">server:</div><div class="line">  port: 5678</div><div class="line">spring:</div><div class="line">  application:</div><div class="line">    name: sidecar</div><div class="line"></div><div class="line">sidecar:</div><div class="line">  port: 8000</div><div class="line">  health-uri: http://localhost:8000/health.json</div></pre></td></tr></table></figure></p>
+<p>The api for the DiscoveryClient.getInstances() method is /hosts/{serviceId}. Here is an example response for/hosts/customers that returns two instances on different hosts. This api is accessible to the non-jvm app (if the sidecar is on port 5678) at <a href="http://localhost:5678/hosts/{serviceId}" target="_blank" rel="external">http://localhost:5678/hosts/{serviceId}</a>.<br>获取服务实例信息的api是 /hosts/{serviceId}.下面是/hosts/customers的一个例子，例中返回两个不同host的实例信息<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">/hosts/customers</div><div class="line">[</div><div class="line">    &#123;</div><div class="line">        <span class="string">"host"</span>: <span class="string">"myhost"</span>,</div><div class="line">        <span class="string">"port"</span>: 9000,</div><div class="line">        <span class="string">"uri"</span>: <span class="string">"http://myhost:9000"</span>,</div><div class="line">        <span class="string">"serviceId"</span>: <span class="string">"CUSTOMERS"</span>,</div><div class="line">        <span class="string">"secure"</span>: <span class="literal">false</span></div><div class="line">    &#125;,</div><div class="line">    &#123;</div><div class="line">        <span class="string">"host"</span>: <span class="string">"myhost2"</span>,</div><div class="line">        <span class="string">"port"</span>: 9000,</div><div class="line">        <span class="string">"uri"</span>: <span class="string">"http://myhost2:9000"</span>,</div><div class="line">        <span class="string">"serviceId"</span>: <span class="string">"CUSTOMERS"</span>,</div><div class="line">        <span class="string">"secure"</span>: <span class="literal">false</span></div><div class="line">    &#125;</div><div class="line">]</div></pre></td></tr></table></figure></p>
+<p>The Zuul proxy automatically adds routes for each service known in eureka to /<serviceid>, so the customers service is available at /customers. The Non-jvm app can access the customer service via <a href="http://localhost:5678/customers(assuming" target="_blank" rel="external">http://localhost:5678/customers(assuming</a> the sidecar is listening on port 5678).<br>Zuul代理自动为每个在eureka中的服务添加路由 /<serviceid>，因此‘customers’服务通过 /customers可用。非jvm应用可通过下面请求访问customer service <a href="http://localhost:5678/customers(假设sidecar监听端口" target="_blank" rel="external">http://localhost:5678/customers(假设sidecar监听端口</a> 5678).<br>If the Config Server is registered with Eureka, non-jvm application can access it via the Zuul proxy. If the serviceId of the ConfigServer is configserver and the Sidecar is on port 5678, then it can be accessed at<a href="http://localhost:5678/configserver" target="_blank" rel="external">http://localhost:5678/configserver</a><br>如果配置服务器在eureka中注册，非jvm应用可用通过zuul代理访问。假设配置服务的服务id是configserver ，并且sidecar在5678端口，则非jvm应用可以通过<a href="http://localhost:5678/configserver访问配置服务" target="_blank" rel="external">http://localhost:5678/configserver访问配置服务</a><br>Non-jvm app can take advantage of the Config Server’s ability to return YAML documents. For example, a call to<a href="http://sidecar.local.spring.io:5678/configserver/default-master.yml" target="_blank" rel="external">http://sidecar.local.spring.io:5678/configserver/default-master.yml</a> might result in a YAML document like the following<br>非jvm应用可以利用配置服务返回YAML文档，比如调用<a href="http://sidecar.local.spring.io:5678/configserver/default-master.yml" target="_blank" rel="external">http://sidecar.local.spring.io:5678/configserver/default-master.yml</a> 会返回下面的文档<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">eureka:</div><div class="line">  client:</div><div class="line">    serviceUrl:</div><div class="line">      defaultZone: http://localhost:8761/eureka/</div><div class="line">  password: password</div><div class="line">info:</div><div class="line">  description: Spring Cloud Samples</div><div class="line">  url: https://github.com/spring-cloud-samples</div></pre></td></tr></table></figure></serviceid></serviceid></p>
+<p>Last updated 2016-08-22 14:34:48 EDT</p>
+</filtertype></simpleclassname></type></client></clustername></clustername></client></client>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>如果你也觉得好，就值得</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+        <div id="wechat" style="display: inline-block">
+          <img id="wechat_qr" src="/images/weixinzhifu.png" alt="lizhaosheng WeChat Pay"/>
+          <p>微信打赏</p>
+        </div>
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="/images/zhifubao.png" alt="lizhaosheng Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/18/接下来要写的/" rel="next" title="接下来要写的">
+                <i class="fa fa-chevron-left"></i> 接下来要写的
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/"
+           data-title="Spring Cloud微服务学习[1]:Spring Cloud Netflix文档翻译" data-url="http://lizhaosheng.github.io/2016/08/29/Spring-Cloud微服务学习[1] - Spring-Cloud-Netflix文档翻译/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="lizhaosheng" />
+          <p class="site-author-name" itemprop="name">lizhaosheng</p>
+          <p class="site-description motion-element" itemprop="description">为了生活，努力鞭促自己<br>为了家人，拾起勇气奋斗</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">5</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">4</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">12</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">1.</span> <span class="nav-text">引言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">2.</span> <span class="nav-text">服务发现：Eureka Clients</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.1.</span> <span class="nav-text">通过Eureka注册服务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.2.</span> <span class="nav-text">Eureka服务端校验</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.3.</span> <span class="nav-text">状态页面和健康检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.4.</span> <span class="nav-text">注册安全应用（HTTPS）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.5.</span> <span class="nav-text">Eureka健康检查</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.6.</span> <span class="nav-text">Eureka实例和客户端的元数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.7.</span> <span class="nav-text">使用eureka客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.8.</span> <span class="nav-text">EurekaClient对象原生服务的替代方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">2.9.</span> <span class="nav-text">为什么注册服务如此慢</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">3.</span> <span class="nav-text">服务发现：eureka服务端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.1.</span> <span class="nav-text">高可用特性，区块和区域</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.2.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.3.</span> <span class="nav-text">同位端感知</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">3.4.</span> <span class="nav-text">Ip地址更好</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">4.</span> <span class="nav-text">断路器：Hystrix客户端</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.1.</span> <span class="nav-text">传导安全上下文或者使用spring范围</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.2.</span> <span class="nav-text">健康指示器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">4.3.</span> <span class="nav-text">Hystrix度量流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">5.</span> <span class="nav-text">断路器：hystrix dashboard</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">6.</span> <span class="nav-text">Turbine</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">6.1.</span> <span class="nav-text">Turbine流</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">7.</span> <span class="nav-text">客户端负载均衡：ribbon</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.1.</span> <span class="nav-text">自定义ribbon客户端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.2.</span> <span class="nav-text">Eureka中使用ribbon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.3.</span> <span class="nav-text">栗子：eureka之外使用ribbon</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.4.</span> <span class="nav-text">栗子：ribbon中禁用eureka</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">7.5.</span> <span class="nav-text">直接使用ribbon api</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">8.</span> <span class="nav-text">声明式rest客户端：feign</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.1.</span> <span class="nav-text">重写feigh默认实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.2.</span> <span class="nav-text">Feign hystrix 支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.3.</span> <span class="nav-text">Feign的hystrix回调</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.4.</span> <span class="nav-text">Feign继承支持</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.5.</span> <span class="nav-text">Feign请求/响应压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">8.6.</span> <span class="nav-text">Feign日志</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">9.</span> <span class="nav-text">额外配置：archaius</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#undefined"><span class="nav-number">10.</span> <span class="nav-text">路由和过滤器：zuul</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.1.</span> <span class="nav-text">内嵌Zuul反向代理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.2.</span> <span class="nav-text">Cookies和敏感头信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.3.</span> <span class="nav-text">路由信息展示应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.4.</span> <span class="nav-text">窒息模式和本地转发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.5.</span> <span class="nav-text">通过zuul上传文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.6.</span> <span class="nav-text">简单内嵌zuul</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.7.</span> <span class="nav-text">关闭zuul过滤器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undefined"><span class="nav-number">10.8.</span> <span class="nav-text">Sidecar多语言支持</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">lizhaosheng</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lizhaosheng"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
